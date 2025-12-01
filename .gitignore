@@ -1,0 +1,11 @@
+*.lua
+__pycache__
+.venv
+.env
+.vscode
+builds
+logs
+*_temp
+*.sqlite3
+*.sqlite
+*.tar.*
