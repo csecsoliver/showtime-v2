@@ -9,3 +9,5 @@ logs
 *.sqlite3
 *.sqlite
 *.tar.*
+pico-main
+nginx.conf.compiled

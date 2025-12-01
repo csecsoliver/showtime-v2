@@ -1,5 +1,8 @@
 lapis = require "lapis"
 
 class extends lapis.Application
+  layout: require "views.mainlayout"
+
   "/": =>
-    "Welcome to Lapis #{require "lapis.version"}!"
+    @type = "m"
+    render: "index"
