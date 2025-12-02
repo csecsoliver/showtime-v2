@@ -1,6 +1,7 @@
 import Widget from require "lapis.html"
 class MainLayout extends Widget
     content: =>
+        raw "<!DOCTYPE HTML>"
         html lang: "en", ->
             head ->
                 meta charset: "UTF-8"
