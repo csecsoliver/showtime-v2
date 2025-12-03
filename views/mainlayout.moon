@@ -26,9 +26,9 @@ class MainLayout extends Widget
                             li -> 
                                 a href: "/", "Homepage"
                             li -> 
-                                a href: "/workshops", "Workshops"
+                                a href: "/wl", "Workshops"
                             li -> 
-                                a href: "/dashboard", "Dashboard"
+                                a href: "/dh", "Dashboard"
                 main ->
                     @content_for "inner"
                 footer ->

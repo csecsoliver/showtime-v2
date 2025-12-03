@@ -1,4 +1,4 @@
-import Model from require "lapis.db.model"
+import Model, enum from require "lapis.db.model"
 
 class Users extends Model
     @relations: {

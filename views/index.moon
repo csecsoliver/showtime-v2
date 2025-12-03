@@ -1,5 +1,5 @@
 import Widget from require "lapis.html"
-
+locales = require "libs/locales"
 class IndexPage extends Widget
     content: =>
-        p "Welcome on the homepage"
+        p locales.welcome

@@ -1,0 +1,26 @@
+locales = {
+    en: {
+        site_name: "ShowTime"
+        homepage: "Homepage"
+        workshops: "Workshops"
+        login: "Login"
+        sign_up: "Sign-up"
+        password_error: "The password you provided is incorrect"
+        email: "Email"
+        password: "Password"
+        welcome: "Welcome to the Show-Time site, if you want to see open workshops, click on the \"Workshops\" option above."
+
+    }
+    hu: {
+        site_name: "ShowTime"
+        homepage: "Főoldal"
+        workshops: "Foglalkozások"
+        login: "Bejelentkezés"
+        sign_up: "Regisztráció"
+        password_error: "Hibás jelszó"
+        email: "E-mail"
+        password: "Jelszó"
+        welcome: "Üdvözöllek a Show-Time weboldalán, ha a nyílt foglalkozásokat szeretnéd megtekinteni, kattints a \"Foglalkozások\" menüpontra"
+    }
+}
+locales.en

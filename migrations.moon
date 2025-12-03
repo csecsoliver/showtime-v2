@@ -16,9 +16,9 @@ import create_table, types, add_column from require "lapis.db.schema"
             {"location", types.text default: ""}
             {"max_participants", types.integer default: -1}
             {"sponsor", types.text default: "none"}
-            {"open", types.number}
+            {"open", types.integer}
             {"extra_text", types.text default: ""}
-            {"extra_text_visibility", types.number default: 0}
+            {"extra_text_visibility", types.integer default: 0}
         }
         create_table "files", {
             {"id", types.integer primary_key:true}
@@ -29,9 +29,20 @@ import create_table, types, add_column from require "lapis.db.schema"
             {"id", types.integer primary_key:true}
             {"workshop_id", types.integer}
             {"user_id", types.integer}
-            {"confirmed", types.number default: 0}
-            {"name", types.number}
+            {"confirmed", types.integer default: 0}
+            {"name", types.integer}
             {"notes", types.text default: ""}
+        }
+        create_table "email_codes", {
+            {"id", types.integer primary_key: true}
+            {"code", types.text}
+            {"user_id", types.integer}
+        }
+        create_table "session_tokens", {
+            {"id", types.integer primary_key: true}
+            {"token", types.text}
+            {"user_id", types.integer}
+            {"expiry", types.integer}
         }
         -- add_column "posts", "thumbnail_path", types.text default: ""
 }
