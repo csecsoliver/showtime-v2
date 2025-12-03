@@ -11,3 +11,4 @@ logs
 *.tar.*
 pico-main
 nginx.conf.compiled
+*.log

@@ -9,7 +9,8 @@ locales = {
         email: "Email"
         password: "Password"
         welcome: "Welcome to the Show-Time site, if you want to see open workshops, click on the \"Workshops\" option above."
-
+        emailoption: "Login with email"
+        passwordoption: "Login with password"
     }
     hu: {
         site_name: "ShowTime"
@@ -21,6 +22,8 @@ locales = {
         email: "E-mail"
         password: "Jelszó"
         welcome: "Üdvözöllek a Show-Time weboldalán, ha a nyílt foglalkozásokat szeretnéd megtekinteni, kattints a \"Foglalkozások\" menüpontra"
+        emailoption: "Bejelentkezés e-maillel"
+        passwordoption: "Bejelentkezés jelszóval"
     }
 }
 locales.en
