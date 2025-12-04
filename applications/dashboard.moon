@@ -4,12 +4,15 @@ import Users, Sessiontokens, Workshops from require "models" -- this is so stupi
 log = require "libs/log"
 import parse_datetime_local from require "libs/time"
 import escape from require "lapis.util"
+locales = require "libs/locales"
 class DashboardApp extends lapis.Application
     @before_filter =>
         unless @current_user
             @referrer = @req.parsed_url.path
             @write redirect_to: (@url_for "login") .. "?referrer=" .. escape(@referrer)
             return
+        unless @current_user_table.role >= 20
+            @write locales.no_permission
     ["dh": "/dh"]: =>
         render: "dashboard_home"
     ["new_workshop": "/dw/new"]: respond_to {
@@ -35,9 +38,9 @@ class DashboardApp extends lapis.Application
                 extra_text_visibility: extra_text_visibility
                 created_at: os.time!
             }
-            @write redirect_to: (@url_for "workshop_detail", id: workshop.id)
+            @write redirect_to: (@url_for "dashboard_workshop_details", id: workshop.id)
     }
-    ["workshop_details": "/dw/:id"]: =>
+    ["dashboard_workshop_details": "/dw/:id"]: =>
         @id = @params.id
         render: "dashboard_workshop_details"
 

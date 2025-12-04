@@ -26,6 +26,7 @@ locales = {
         workshop_extra_text_visibility_everyone: "Everyone"
         workshops_create_new: "Create New Workshop"
         workshops_save: "Save Workshop"
+        no_permission: "You don't have permission to view this."
     }
     hu: {
         site_name: "ShowTime"
@@ -54,6 +55,7 @@ locales = {
         workshop_extra_text_visibility_everyone: "Mindenki"
         workshops_create_new: "Új Foglalkozás Létrehozása"
         workshops_save: "Foglalkozás Mentése"
+        no_permission: "Nincs jogosultságod a megtekintáshez."
     }   
 }
 locales.en

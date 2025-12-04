@@ -11,6 +11,7 @@ class extends lapis.Application
                 user = token\get_user!
                 if (user.id) and (token.expiry > os.time!)
                     @current_user = user.email
+                    @current_user_table = user
     @include "applications.login"
     @include "applications.dashboard"
     
