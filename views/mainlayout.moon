@@ -1,4 +1,5 @@
 import Widget from require "lapis.html"
+locales = require "libs/locales"
 class MainLayout extends Widget
     content: =>
         raw "<!DOCTYPE HTML>"
@@ -20,15 +21,21 @@ class MainLayout extends Widget
                 link rel: "stylesheet", href: "/static/styles.css"
             body ->
                 header ->
-                    h1 "ShowTime"
+                    h1 locales.site_name
                     nav ->
                         ul ->
                             li -> 
-                                a href: "/", "Homepage"
+                                a href: "/", locales.homepage
                             li -> 
-                                a href: "/wl", "Workshops"
+                                a href: "/wl", locales.workshops
                             li -> 
-                                a href: "/dh", "Dashboard"
+                                a href: "/dh", locales.dashboard
+                            if @current_user
+                                li ->
+                                    span locales.current_user .. @current_user
+                            else
+                                li ->
+                                    a href: "/l", locales.login
                 main ->
                     @content_for "inner"
                 footer ->

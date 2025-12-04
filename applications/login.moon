@@ -8,8 +8,11 @@ log = require "libs/log"
 
 class LoginApp extends lapis.Application
     [login: "/l"]: respond_to {
-        GET: => render: true
+        GET: =>
+            @referrer = @params.referrer
+            render: true
         POST: => 
+            @referrer = @params.referrer
             if @params.code
                 emailcode = Emailcodes\find code: @params.code
                 if emailcode and emailcode.code == @params.code
@@ -20,7 +23,10 @@ class LoginApp extends lapis.Application
                     }
                     @session.email = @params.email
                     @session.token = token.token
-                    @write redirect_to: "/dh"
+                    referrer = "/"
+                    if @params.referrer and @params.referrer != ""
+                        referrer = @params.referrer
+                    @write redirect_to: (referrer)
                 else
                     @error_message = "Wrong code"
                     @nextstep = "emailcode"
@@ -36,7 +42,10 @@ class LoginApp extends lapis.Application
                     }
                     @session.email = @params.email
                     @session.token = token.token
-                    @write redirect_to: "/dh"
+                    referrer = "/"
+                    if @params.referrer and @params.referrer != ""
+                        referrer = @params.referrer
+                    @write redirect_to: (referrer)
                 else
                     @error_message = "Wrong password"
                     @write render: "login"
