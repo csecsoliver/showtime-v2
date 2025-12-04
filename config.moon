@@ -3,7 +3,7 @@ import config from require "lapis.config"
 config "development", ->
   server "nginx"
   code_cache "off"
-  num_workers "1"
+  num_workers "1" -- Why would anyone want more than 1 worker on one machine?
   sqlite ->
     database "showtime-v2.sqlite"
 

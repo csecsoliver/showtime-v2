@@ -13,6 +13,19 @@ locales = {
         emailoption: "Login with email"
         passwordoption: "Login with password"
         current_user: "Logged in as "
+        dash_workshops_desc: "Here you can see the list of workshops you created."
+        workshop_date: "Workshop Date and Time"
+        workshop_location: "Workshop Location"
+        workshop_open: "Open"
+        workshop_max_participants: "Maximum Participants"
+        workshop_sponsor: "Sponsor"
+        workshop_extra_text: "Extra Text"
+        workshop_extra_text_visibility: "Extra Text Visibility"
+        workshop_extra_text_visibility_organizers_only: "Organizers Only"
+        workshop_extra_text_visibility_participants: "Participants"
+        workshop_extra_text_visibility_everyone: "Everyone"
+        workshops_create_new: "Create New Workshop"
+        workshops_save: "Save Workshop"
     }
     hu: {
         site_name: "ShowTime"
@@ -28,6 +41,19 @@ locales = {
         emailoption: "Bejelentkezés e-maillel"
         passwordoption: "Bejelentkezés jelszóval"
         current_user: "Bejelentkezve mint "
-    }
+        dash_workshops_desc: "Itt láthatod a létrehozott foglalkozásaid listáját."
+        workshop_date: "Foglalkozás Dátuma és Ideje"
+        workshop_location: "Foglalkozás Helyszíne"
+        workshop_open: "Nyílt"
+        workshop_max_participants: "Maximális Résztvevők"
+        workshop_sponsor: "Szponzor"
+        workshop_extra_text: "Extra Szöveg"
+        workshop_extra_text_visibility: "Extra Szöveg Láthatósága"
+        workshop_extra_text_visibility_organizers_only: "Csak Szervezők"
+        workshop_extra_text_visibility_participants: "Résztvevők"
+        workshop_extra_text_visibility_everyone: "Mindenki"
+        workshops_create_new: "Új Foglalkozás Létrehozása"
+        workshops_save: "Foglalkozás Mentése"
+    }   
 }
 locales.en

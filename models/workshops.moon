@@ -11,3 +11,8 @@ class Workshops extends Model
         unlisted: 1
         public: 2
     }
+    @extra_text_visibility: enum {
+        organizers_only: 0
+        participants: 1
+        everyone: 2
+    }

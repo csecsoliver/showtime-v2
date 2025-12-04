@@ -29,7 +29,7 @@ import create_table, types, add_column from require "lapis.db.schema"
             {"id", types.integer primary_key:true}
             {"workshop_id", types.integer}
             {"user_id", types.integer}
-            {"confirmed", types.integer default: 0}
+            {"approved", types.integer default: 0}
             {"name", types.integer}
             {"notes", types.text default: ""}
         }
@@ -43,6 +43,11 @@ import create_table, types, add_column from require "lapis.db.schema"
             {"token", types.text}
             {"user_id", types.integer}
             {"expiry", types.integer}
+        }
+        create_table "invites", {
+            {"id", types.integer primary_key: true}
+            {"code", types.text}
+            {"uses_left", types.integer default: 1}
         }
         -- add_column "posts", "thumbnail_path", types.text default: ""
 }
