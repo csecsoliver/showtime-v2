@@ -26,7 +26,12 @@ locales = {
         workshop_extra_text_visibility_everyone: "Everyone"
         workshops_create_new: "Create New Workshop"
         workshops_save: "Save Workshop"
+        workshop_invite_only: "Invite Only"
+        workshop_unlisted: "Unlisted"
+        workshop_public: "Public"
         no_permission: "You don't have permission to view this."
+        not_found: "The requested item could not be found."
+        invite_only: "This workshop is closed, an invite is required to participate."
     }
     hu: {
         site_name: "ShowTime"
@@ -55,7 +60,12 @@ locales = {
         workshop_extra_text_visibility_everyone: "Mindenki"
         workshops_create_new: "Új Foglalkozás Létrehozása"
         workshops_save: "Foglalkozás Mentése"
+        workshop_invite_only: "Csak Meghívóval"
+        workshop_unlisted: "Nem Listázott, de nyílt"
+        workshop_public: "Nyilvános"
         no_permission: "Nincs jogosultságod a megtekintáshez."
+        not_found: "A kért elem nem található."
+        invite_only: "Ez a foglalkozás zárt, meghívó szükséges a részvételhez."
     }   
 }
 locales.en
