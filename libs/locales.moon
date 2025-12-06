@@ -33,7 +33,7 @@ locales = {
         no_permission: "You don't have permission to view this."
         not_found: "The requested item could not be found."
         invite_only: "This workshop is closed, an invite is required to participate."
-        workshop_view: "Workshop" --tbd
+        workshop_view: "View workshop"
     }
     hu: {
         site_name: "ShowTime"
@@ -69,7 +69,8 @@ locales = {
         no_permission: "Nincs jogosultságod a megtekintáshez."
         not_found: "A kért elem nem található."
         invite_only: "Ez a foglalkozás zárt, meghívó szükséges a részvételhez."
-        workshop_view: "Foglalkozás" --tbd
-    }   
+        workshop_view: "Foglalkozás megtekintése"
+
+    }
 }
-locales.en
+locales.hu

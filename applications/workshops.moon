@@ -12,16 +12,19 @@ class DashboardApp extends lapis.Application
             @write redirect_to: (@url_for "login") .. "?referrer=" .. escape(@referrer)
             return
     ["view_workshop": "/wv/:id"]: =>
-        workshop = Workshops\find @params.i
+        workshop = Workshops\find @params.id
         unless workshop
             @write locales.not_found
         if workshop.visibility == 0
+            
             invite = Invites\find workshop_id: workshop.id, user_id: @current_user_table.id
             unless invite
                 @write locales.invite_only
         
         @workshop = workshop
         render: "workshop_view"
+    ["workshops": "/wl"]: =>
+        render: "workshops"
         
 
 

@@ -15,6 +15,7 @@ class extends lapis.Application
         @type = "m"
     @include "applications.login"
     @include "applications.dashboard"
+    @include "applications.workshops"
     
     "/": =>
         render: "index"
@@ -22,4 +23,4 @@ class extends lapis.Application
         hallofshame "Someone was naughty again!"
         hallofshame "Request for path: " .. @req.parsed_url.path.. " from IP: " .. (@req.headers["X-Forwarded-For"] or ngx.var.remote_addr)
         @req.headers["User-Agent"] and hallofshame "User-Agent: " .. @req.headers["User-Agent"]
-        layout: false, "404 Not Found"
+        "404 Not Found"

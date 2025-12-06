@@ -43,5 +43,7 @@ class DashboardApp extends lapis.Application
     }
     ["dashboard_workshop_details": "/dw/:id"]: =>
         @id = @params.id
-        render: "dashboard_workshop_details"
-
+        if (Workshops\find @params.id).user_id == @current_user_table.id
+            @write render: "dashboard_workshop_details"
+        else 
+            @write locales.no_permission

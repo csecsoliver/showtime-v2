@@ -26,7 +26,7 @@ class LoginApp extends lapis.Application
                     @session.email = @params.email
                     @session.token = token.token
                     referrer = "/"
-                    if @params.referrer and @params.referrer != ""
+                    if @params.referrer and @params.referrer\match("^/[^/]")
                         referrer = @params.referrer
                     emailcode\delete!
                     @write redirect_to: (referrer)
