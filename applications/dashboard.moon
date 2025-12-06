@@ -12,6 +12,7 @@ class DashboardApp extends lapis.Application
             @write redirect_to: (@url_for "login") .. "?referrer=" .. escape(@referrer)
             return
         unless @current_user_table.role >= 20
+            log @current_user_table.role
             @write locales.no_permission
     ["dh": "/dh"]: =>
         render: "dashboard_home"
@@ -22,7 +23,7 @@ class DashboardApp extends lapis.Application
             location = @params.location
             date = parse_datetime_local @params.date
             user = Users\find email: @current_user
-            open = @params.open == "on"
+            visibility = @params.visibility
             max_participants = tonumber @params.max_participants or -1
             sponsor = @params.sponsor or "none"
             extra_text = @params.extra_text or ""
@@ -31,7 +32,7 @@ class DashboardApp extends lapis.Application
                 user_id: user.id
                 location: location
                 date: date
-                open: open
+                visibility: visibility
                 max_participants: max_participants
                 sponsor: sponsor
                 extra_text: extra_text

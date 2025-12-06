@@ -21,5 +21,5 @@ class DashHome extends Widget
                             td workshop.location
                             td os.date("%x %X", workshop.date)
                             td ->
-                                a href: "/dw/" .. workshop.id , locales.workshop_open
+                                a href: "/dw/" .. workshop.id , locales.workshop_visibility
             a href: "/dw/new", locales.workshops_create_new

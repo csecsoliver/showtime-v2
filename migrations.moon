@@ -16,7 +16,7 @@ import create_table, types, add_column from require "lapis.db.schema"
             {"location", types.text default: ""}
             {"max_participants", types.integer default: -1}
             {"sponsor", types.text default: "none"}
-            {"open", types.integer}
+            {"visibility", types.integer}
             {"extra_text", types.text default: ""}
             {"extra_text_visibility", types.integer default: 0}
         }

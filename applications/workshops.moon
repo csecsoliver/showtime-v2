@@ -15,12 +15,13 @@ class DashboardApp extends lapis.Application
         workshop = Workshops\find @params.i
         unless workshop
             @write locales.not_found
-        if workshop.open == 0
+        if workshop.visibility == 0
             invite = Invites\find workshop_id: workshop.id, user_id: @current_user_table.id
             unless invite
                 @write locales.invite_only
-
+        
         @workshop = workshop
+        render: "workshop_view"
         
 
 

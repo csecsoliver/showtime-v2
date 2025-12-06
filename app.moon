@@ -12,11 +12,11 @@ class extends lapis.Application
                 if (user.id) and (token.expiry > os.time!)
                     @current_user = user.email
                     @current_user_table = user
+        @type = "m"
     @include "applications.login"
     @include "applications.dashboard"
     
     "/": =>
-        @type = "m"
         render: "index"
     handle_404: =>
         hallofshame "Someone was naughty again!"

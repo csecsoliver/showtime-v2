@@ -6,7 +6,7 @@ class Workshops extends Model
         {"participations", has_many: "Participations"}
         {"files", has_many: "Files"}
     }
-    @open: enum {
+    @visibility: enum {
         invite_only: 0
         unlisted: 1
         public: 2

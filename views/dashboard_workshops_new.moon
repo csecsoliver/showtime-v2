@@ -9,8 +9,8 @@ class DashWorkshopsNew extends Widget
             label for: "date", locales.workshop_date
             input type: "datetime-local", id: "date", name: "date", required: true
 
-            label for: "open", locales.workshop_open
-            element "select", id: "open", name: "open", ->
+            label for: "visibility", locales.workshop_visibility
+            element "select", id: "visibility", name: "visibility", ->
                 element "option", value: "0", locales.workshop_invite_only
                 element "option", value: "1", locales.workshop_unlisted
                 element "option", value: "2", locales.workshop_public

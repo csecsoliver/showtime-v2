@@ -16,7 +16,7 @@ locales = {
         dash_workshops_desc: "Here you can see the list of workshops you created."
         workshop_date: "Workshop Date and Time"
         workshop_location: "Workshop Location"
-        workshop_open: "Open"
+        workshop_visibility: "Visibility"
         workshop_max_participants: "Maximum Participants"
         workshop_sponsor: "Sponsor"
         workshop_extra_text: "Extra Text"
@@ -26,12 +26,14 @@ locales = {
         workshop_extra_text_visibility_everyone: "Everyone"
         workshops_create_new: "Create New Workshop"
         workshops_save: "Save Workshop"
+        workshops_view_edit: "View/Manage workshop details"
         workshop_invite_only: "Invite Only"
         workshop_unlisted: "Unlisted"
         workshop_public: "Public"
         no_permission: "You don't have permission to view this."
         not_found: "The requested item could not be found."
         invite_only: "This workshop is closed, an invite is required to participate."
+        workshop_view: "Workshop" --tbd
     }
     hu: {
         site_name: "ShowTime"
@@ -50,7 +52,7 @@ locales = {
         dash_workshops_desc: "Itt láthatod a létrehozott foglalkozásaid listáját."
         workshop_date: "Foglalkozás Dátuma és Ideje"
         workshop_location: "Foglalkozás Helyszíne"
-        workshop_open: "Nyílt"
+        workshop_visibility: "Láthatóság"
         workshop_max_participants: "Maximális Résztvevők"
         workshop_sponsor: "Szponzor"
         workshop_extra_text: "Extra Szöveg"
@@ -60,12 +62,14 @@ locales = {
         workshop_extra_text_visibility_everyone: "Mindenki"
         workshops_create_new: "Új Foglalkozás Létrehozása"
         workshops_save: "Foglalkozás Mentése"
+        workshops_view_edit: "Foglalkozás megtekintése/kezelése"
         workshop_invite_only: "Csak Meghívóval"
         workshop_unlisted: "Nem Listázott, de nyílt"
         workshop_public: "Nyilvános"
         no_permission: "Nincs jogosultságod a megtekintáshez."
         not_found: "A kért elem nem található."
         invite_only: "Ez a foglalkozás zárt, meghívó szükséges a részvételhez."
+        workshop_view: "Foglalkozás" --tbd
     }   
 }
 locales.en

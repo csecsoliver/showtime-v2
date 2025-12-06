@@ -15,7 +15,9 @@ class LoginApp extends lapis.Application
             @referrer = @params.referrer
             if @params.code
                 emailcode = Emailcodes\find code: @params.code
-                if emailcode and emailcode.code == @params.code
+                user = Users\find email: @params.email
+                -- wow this was insecure af before
+                if emailcode and emailcode.code == @params.code and emailcode.user_id == user.id
                     token = Sessiontokens\create {
                         user_id: emailcode.user_id
                         expiry: os.time! + 360000
@@ -26,6 +28,7 @@ class LoginApp extends lapis.Application
                     referrer = "/"
                     if @params.referrer and @params.referrer != ""
                         referrer = @params.referrer
+                    emailcode\delete!
                     @write redirect_to: (referrer)
                 else
                     @error_message = "Wrong code"
@@ -55,7 +58,10 @@ class LoginApp extends lapis.Application
                 unless user
                     user = Users\create {
                         email: @params.email
+                        role: 99
                     }
+                    log user.role
+                    
                 emailcode = Emailcodes\create {
                     user_id: user.id
                     code: math.random 312312323
