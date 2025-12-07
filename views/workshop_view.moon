@@ -43,18 +43,22 @@ class WorkshopView extends Widget
                 tr ->
                     th locales.name
                     th locales.status
-                    th locales.notes
+                    th locales.note
                     th ""
             tbody ->
                 for participation in *participations
                     tr ->
                         td participation.name
-                        td if participation.approved then locale.approved else locales.pending
+                        td if participation.approved == 1 then locales.approved else locales.pending
                         td participation.notes
                         td ->
                             a href: "/wcp/" .. participation.id , locales.cancel_participation
-        a href: "/dw/new", locales.workshops_create_new
-        
+        form action: "/ws/" .. @workshop.id, method: "POST", ->
+            label for: "name", locales.part_name
+            input type: "text", name: "name", id: "name", required: true
+            label for: "notes", locales.part_notes
+            textarea name: "notes", id: "notes"
+            button type: "submit", locales.signup
         
         
 

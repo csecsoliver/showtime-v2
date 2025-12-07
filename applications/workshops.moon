@@ -41,11 +41,12 @@ class WorkshopApp extends lapis.Application
         }
         redirect_to: "/wv/" .. @workshop.id
     ["workshop_cancel_participation": "/wcp/:part_id"]: =>
-        @participations = Participants\find @params.part_id
-        unless @participations
+        participation = Participations\find @params.part_id
+        unless participation
             @write locales.not_found
-        @participations\delete
-        redirect_to: "/wl"
+        id = participation.workshop_id
+        participation\delete!
+        redirect_to: "/wv/" .. id
 
     ["workshops": "/wl"]: =>
         render: "workshops"

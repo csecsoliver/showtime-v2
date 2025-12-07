@@ -42,6 +42,9 @@ locales = {
         pending: "Pending"
         approved: "Approved"
         status: "Status"
+        part_name: "Participant's name"
+        part_notes: "Participant's additional notes"
+        signup: "Sign up participant"
     }
     hu: {
         site_name: "ShowTime"
@@ -49,7 +52,6 @@ locales = {
         workshops: "Foglalkozások"
         dashboard: "Vezérlőpult"
         login: "Bejelentkezés"
-        sign_up: "Regisztráció"
         password_error: "Hibás jelszó"
         email: "E-mail"
         password: "Jelszó"
@@ -86,6 +88,9 @@ locales = {
         pending: "Függőben"
         approved: "Elfogadva"
         status: "Státusz" -- to be improved
+        part_name: "Résztvevő neve"
+        part_notes: "Résztvevővel kapcsolatos megjegyzések"
+        signup: "Jelentkezés"
     }
 }
 locales.hu
