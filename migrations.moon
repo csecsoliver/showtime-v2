@@ -30,7 +30,7 @@ import create_table, types, add_column from require "lapis.db.schema"
             {"workshop_id", types.integer}
             {"user_id", types.integer}
             {"approved", types.integer default: 0}
-            {"name", types.integer}
+            {"name", types.text}
             {"notes", types.text default: ""}
         }
         create_table "email_codes", {

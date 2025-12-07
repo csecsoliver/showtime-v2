@@ -1,6 +1,6 @@
 import Widget from require "lapis.html"
 locales = require "libs/locales"
-import Workshops from require "models"
+import Workshops, Participations from require "models"
 import to_datetime_local from require "libs/time"
 class DashWorkshopDetails extends Widget
     content: =>
@@ -34,5 +34,26 @@ class DashWorkshopDetails extends Widget
             textarea id: "extra_text", name: "extra_text", value: workshop.extra_text or ""
             
             button type: "submit", locales.workshops_save
+
+        h2 locales.participant_management
+        participations = Participations\select "where workshop_id = ? order by id", @id
+        element "table", ->
+            thead ->
+                tr ->
+                    th locales.name
+                    th locales.status
+                    th locales.note
+                    th locales.actions
+            tbody ->
+                for participation in *participations
+                    tr ->
+                        td participation.name
+                        td if participation.approved == 1 then locales.approved else locales.pending
+                        td participation.notes
+                        td ->
+                            if participation.approved == 0
+                                a href: "/dw/approve/" .. participation.id, locales.approve_participant
+                                text " | "
+                            a href: "/dw/remove/" .. participation.id, locales.remove_participant
 
             

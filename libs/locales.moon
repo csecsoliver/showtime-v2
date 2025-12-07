@@ -45,6 +45,12 @@ locales = {
         part_name: "Participant's name"
         part_notes: "Participant's additional notes"
         signup: "Sign up participant"
+        participants: "Participants"
+        approve_participant: "Approve"
+        reject_participant: "Reject"
+        remove_participant: "Remove"
+        participant_management: "Participant Management"
+        actions: "Actions"
     }
     hu: {
         site_name: "ShowTime"
@@ -91,6 +97,12 @@ locales = {
         part_name: "Résztvevő neve"
         part_notes: "Résztvevővel kapcsolatos megjegyzések"
         signup: "Jelentkezés"
+        participants: "Résztvevők"
+        approve_participant: "Jóváhagyás"
+        reject_participant: "Elutasítás"
+        remove_participant: "Eltávolítás"
+        participant_management: "Résztvevők kezelése"
+        actions: "Műveletek"
     }
 }
 locales.hu
