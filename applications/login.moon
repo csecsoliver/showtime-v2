@@ -5,7 +5,7 @@ import Emailcodes, Sessiontokens, Users from require "models"
 argon2 = require "argon2"
 import send_mail from require "libs/sendmail"
 log = require "libs/log"
-openssl = require "openssl"
+openssl_rand = require "openssl.rand"
 class LoginApp extends lapis.Application
     [login: "/l"]: respond_to {
         GET: =>
@@ -21,7 +21,7 @@ class LoginApp extends lapis.Application
                     token = Sessiontokens\create {
                         user_id: emailcode.user_id
                         expiry: os.time! + 7200 -- 2 hours instead of 100 hours
-                        token: openssl.rand.bytes(32) -- More secure token
+                        token: openssl_rand.bytes(32) -- More secure token
                     }
                     @session.email = @params.email
                     @session.token = token.token
@@ -41,7 +41,7 @@ class LoginApp extends lapis.Application
                     token = Sessiontokens\create {
                         user_id: user.id
                         expiry: os.time! + 7200 -- 2 hours instead of 100 hours
-                        token: openssl.rand.bytes(32) -- More secure token
+                        token: openssl_rand.bytes(32) -- More secure token
                     }
                     @session.email = @params.email
                     @session.token = token.token
@@ -60,10 +60,14 @@ class LoginApp extends lapis.Application
                         role: 99
                     }
                     log user.role
-                    
+                
+                f = io.open("/dev/urandom", "rb")
+                rand_bytes = f\read(3)
+                f\close!
+                hex = string.format("%02x%02x%02x", string.byte(rand_bytes, 1, 3))
                 emailcode = Emailcodes\create {
                     user_id: user.id
-                    code: string.format("%06d", tonumber(openssl.rand.bytes(4), 16) % 1000000) -- 6-digit numeric code
+                    code: hex
                 }
                 send_mail(
                     @params.email,

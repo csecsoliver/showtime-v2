@@ -15,7 +15,7 @@ class IndexPage extends Widget
                 input type: "password", name: "password", id: "password", required: true
             elseif @nextstep == "emailcode"
                 label for: "code", locales.emailcode
-                input type: "number", name: "code", id: "code", required: true
+                input type: "text", name: "code", id: "code", required: true
             else
                 input type: "radio", value: "email", name: "option", id: "emailoption", checked: true
                 label for: "emailoption", locales.emailoption

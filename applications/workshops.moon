@@ -1,28 +1,52 @@
 lapis = require "lapis"
 import respond_to from require "lapis.application"
-import Users, Sessiontokens, Workshops, Invites from require "models" -- this is so stupid... I have to use lowercase here
+import Users, Sessiontokens, Workshops, Invites, Participations from require "models" -- this is so stupid... I have to use lowercase here
 log = require "libs/log"
 import parse_datetime_local from require "libs/time"
 import escape from require "lapis.util"
 locales = require "libs/locales"
-class DashboardApp extends lapis.Application
+class WorkshopApp extends lapis.Application
     @before_filter =>
         unless @current_user
             @referrer = @req.parsed_url.path
             @write redirect_to: (@url_for "login") .. "?referrer=" .. escape(@referrer)
             return
     ["view_workshop": "/wv/:id"]: =>
-        workshop = Workshops\find @params.id
-        unless workshop
+        @workshop = Workshops\find @params.id
+        unless @workshop
             @write locales.not_found
-        if workshop.visibility == 0
-            
-            invite = Invites\find workshop_id: workshop.id, user_id: @current_user_table.id
+            return
+        if @workshop.visibility == 0
+            invite = Invites\find workshop_id: @workshop.id, user_id: @current_user_table.id
             unless invite
                 @write locales.invite_only
-        
-        @workshop = workshop
+                return
         render: "workshop_view"
+
+    ["workshop_signup": "/ws/:id"]: =>
+        unless @params.name
+            @write locales.error_message
+        @workshop = Workshops\find @params.id
+        unless @workshop
+            @write locales.not_found
+        if @workshop.visibility == 0
+            invite = Invites\find workshop_id: @workshop.id, user_id: @current_user_table.id
+            unless invite
+                @write locales.invite_only
+        Participations\create {
+            user_id: @current_user_table.id
+            workshop_id: @workshop.id
+            name: @params.name
+            notes: @params.notes or ""
+        }
+        redirect_to: "/wv/" .. @workshop.id
+    ["workshop_cancel_participation": "/wcp/:part_id"]: =>
+        @participations = Participants\find @params.part_id
+        unless @participations
+            @write locales.not_found
+        @participations\delete
+        redirect_to: "/wl"
+
     ["workshops": "/wl"]: =>
         render: "workshops"
         

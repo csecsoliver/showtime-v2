@@ -34,6 +34,14 @@ locales = {
         not_found: "The requested item could not be found."
         invite_only: "This workshop is closed, an invite is required to participate."
         workshop_view: "View workshop"
+        error_message: "An error happened. Report this to a developer."
+        participation: "Participation"
+        cancel_participation: "Cancel participation"
+        name: "Name"
+        note: "Note"
+        pending: "Pending"
+        approved: "Approved"
+        status: "Status"
     }
     hu: {
         site_name: "ShowTime"
@@ -70,7 +78,14 @@ locales = {
         not_found: "A kért elem nem található."
         invite_only: "Ez a foglalkozás zárt, meghívó szükséges a részvételhez."
         workshop_view: "Foglalkozás megtekintése"
-
+        error_message: "Valami hiba történt. Jelentsd a fejlesztőknek."
+        participation: "Részvétel"
+        cancel_participation: "Részvétel lemondása"
+        name: "Név"
+        note: "Megjegyzés"
+        pending: "Függőben"
+        approved: "Elfogadva"
+        status: "Státusz" -- to be improved
     }
 }
 locales.hu

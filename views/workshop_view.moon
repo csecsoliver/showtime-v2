@@ -1,9 +1,12 @@
 import Widget from require "lapis.html"
 locales = require "libs/locales"
-import Workshops, Participations from require "models"
+import Workshops, Participations, Invites from require "models"
 import to_datetime_local from require "libs/time"
 class WorkshopView extends Widget
     content: =>
+        
+        
+        
         h1 locales.workshop_view
         p ->
             b locales.workshop_location .. ": "
@@ -32,6 +35,25 @@ class WorkshopView extends Widget
                         break
             elseif @workshop.extra_text_visibility == 2
                 p @workshop.extra_text
+        
+        h2 locales.participation
+        participations = Participations\select "where user_id = ? and workshop_id = ? order by id", @current_user_table.id, @workshop.id
+        element "table", ->
+            thead ->
+                tr ->
+                    th locales.name
+                    th locales.status
+                    th locales.notes
+                    th ""
+            tbody ->
+                for participation in *participations
+                    tr ->
+                        td participation.name
+                        td if participation.approved then locale.approved else locales.pending
+                        td participation.notes
+                        td ->
+                            a href: "/wcp/" .. participation.id , locales.cancel_participation
+        a href: "/dw/new", locales.workshops_create_new
         
         
         
