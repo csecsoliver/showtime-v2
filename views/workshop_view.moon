@@ -7,7 +7,7 @@ class WorkshopView extends Widget
         h1 locales.workshop_view
         p ->
             b locales.workshop_location .. ": "
-            span @workshop.location
+            span (@workshop.location or "")
         p ->
             b locales.workshop_date .. ": "
             span os.date("%c", @workshop.date)
@@ -21,16 +21,16 @@ class WorkshopView extends Widget
                 span locales.workshop_public
         p ->
             b locales.workshop_sponsor .. ": "
-            span @workshop.sponsor
+            span (@workshop.sponsor or "")
              
-        if string.len(@workshop.extra_text) > 0 and @workshop.extra_text_visibility > 0
+        if string.len(@workshop.extra_text or "") > 0 and @workshop.extra_text_visibility > 0
             if @workshop.extra_text_visibility == 1
                 participations = @workshop.get_participations!
                 for i in *participations
                     if i.user_id == @current_user_table.id
                         p @workshop.extra_text
                         break
-            elseif @workshop_extra_text_visibility == 2
+            elseif @workshop.extra_text_visibility == 2
                 p @workshop.extra_text
         
         

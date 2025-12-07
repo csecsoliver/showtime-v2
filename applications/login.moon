@@ -1,17 +1,17 @@
 lapis = require "lapis"
+ngx = require "ngx"
 import respond_to from require "lapis.application"
 import Emailcodes, Sessiontokens, Users from require "models"
-uuid = require "lua-uuid"
 argon2 = require "argon2"
 import send_mail from require "libs/sendmail"
 log = require "libs/log"
-
+openssl = require "openssl"
 class LoginApp extends lapis.Application
     [login: "/l"]: respond_to {
         GET: =>
             @referrer = @params.referrer
             render: true
-        POST: => 
+        POST: =>
             @referrer = @params.referrer
             if @params.code
                 emailcode = Emailcodes\find code: @params.code
@@ -20,8 +20,8 @@ class LoginApp extends lapis.Application
                 if emailcode and emailcode.code == @params.code and emailcode.user_id == user.id
                     token = Sessiontokens\create {
                         user_id: emailcode.user_id
-                        expiry: os.time! + 360000
-                        token: tostring(uuid.new!)
+                        expiry: os.time! + 7200 -- 2 hours instead of 100 hours
+                        token: openssl.rand.bytes(32) -- More secure token
                     }
                     @session.email = @params.email
                     @session.token = token.token
@@ -40,8 +40,8 @@ class LoginApp extends lapis.Application
                 if argon2.verify(user.passhash, @params.password)
                     token = Sessiontokens\create {
                         user_id: user.id
-                        expiry: os.time! + 360000
-                        token: tostring(uuid.new!)
+                        expiry: os.time! + 7200 -- 2 hours instead of 100 hours
+                        token: openssl.rand.bytes(32) -- More secure token
                     }
                     @session.email = @params.email
                     @session.token = token.token
@@ -53,7 +53,6 @@ class LoginApp extends lapis.Application
                     @error_message = "Wrong password"
                     @write render: "login"
             elseif @params.option == "email"
-                math.randomseed os.time!
                 user = Users\find(email: @params.email)
                 unless user
                     user = Users\create {
@@ -64,7 +63,7 @@ class LoginApp extends lapis.Application
                     
                 emailcode = Emailcodes\create {
                     user_id: user.id
-                    code: math.random 312312323
+                    code: string.format("%06d", tonumber(openssl.rand.bytes(4), 16) % 1000000) -- 6-digit numeric code
                 }
                 send_mail(
                     @params.email,

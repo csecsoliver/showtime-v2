@@ -1,6 +1,6 @@
 lapis = require "lapis"
 import respond_to from require "lapis.application"
-import Users, Sessiontokens, Workshops from require "models" -- this is so stupid... I have to use lowercase here
+import Users, Workshops from require "models" -- this is so stupid... I have to use lowercase here
 log = require "libs/log"
 import parse_datetime_local from require "libs/time"
 import escape from require "lapis.util"
@@ -43,7 +43,8 @@ class DashboardApp extends lapis.Application
     }
     ["dashboard_workshop_details": "/dw/:id"]: =>
         @id = @params.id
-        if (Workshops\find @params.id).user_id == @current_user_table.id
+        workshop = Workshops\find @params.id
+        if workshop and workshop.user_id == @current_user_table.id
             @write render: "dashboard_workshop_details"
-        else 
+        else
             @write locales.no_permission

@@ -8,7 +8,7 @@ class DashWorkshopDetails extends Widget
         form method: "post" , ->
             workshop = Workshops\find @id
             label for: "location", locales.workshop_location
-            input type: "text", id: "location", name: "location", value: workshop.location
+            input type: "text", id: "location", name: "location", value: workshop.location or ""
             label for: "date", locales.workshop_date
             input type: "datetime-local", id: "date", name: "date", required: true, value: to_datetime_local(workshop.time)
             i
@@ -23,7 +23,7 @@ class DashWorkshopDetails extends Widget
             label for: "max_participants", locales.workshop_max_participants
             input type: "text", id: "max_participants", name: "max_participants", min: "1", value: workshop.max_participants
             label for: "sponsor", locales.workshop_sponsor
-            input type: "text", id: "sponsor", name: "sponsor", value: workshop.sponsor
+            input type: "text", id: "sponsor", name: "sponsor", value: workshop.sponsor or ""
             
             label for: "extra_text_visibility", locales.workshop_extra_text_visibility
             element "select", id: "extra_text_visibility", name: "extra_text_visibility", ->
@@ -31,7 +31,7 @@ class DashWorkshopDetails extends Widget
                 element "option", value: "1", locales.workshop_extra_text_visibility_participants, selected: (workshop.extra_text_visibility == 1)
                 element "option", value: "2", locales.workshop_extra_text_visibility_everyone, selected: (workshop.extra_text_visibility == 2)
             label for: "extra_text", locales.workshop_extra_text
-            textarea id: "extra_text", name: "extra_text", value: workshop.extra_text
+            textarea id: "extra_text", name: "extra_text", value: workshop.extra_text or ""
             
             button type: "submit", locales.workshops_save
 
