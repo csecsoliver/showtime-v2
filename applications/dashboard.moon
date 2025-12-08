@@ -97,3 +97,9 @@ class DashboardApp extends lapis.Application
             else
                 @write locales.not_found
     }
+    ["create_invite": "/dic/:id"]: respond_to {
+        GET: =>
+            status: 405, "Method Not Allowed"
+        POST: =>
+            
+    }

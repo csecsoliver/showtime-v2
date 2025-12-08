@@ -52,6 +52,8 @@ locales = {
         remove_participant: "Remove"
         participant_management: "Participant Management"
         actions: "Actions"
+        create_invite: "Create Invite"
+        invited_users: "Invited Users"
     }
     hu: {
         site_name: "ShowTime"
@@ -105,6 +107,8 @@ locales = {
         remove_participant: "Eltávolítás"
         participant_management: "Résztvevők kezelése"
         actions: "Műveletek"
+        create_invite: "Meghívó létrehozása"
+        invited_users: "Meghívott felhasználók"
     }
 }
 locales.hu

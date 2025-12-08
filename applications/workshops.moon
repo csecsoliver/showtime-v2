@@ -58,7 +58,18 @@ class WorkshopApp extends lapis.Application
 
     ["workshops": "/wl"]: =>
         render: "workshops"
-        
+    
+    ["invite": "/i/:code"]: =>
+        invite = Invites\find code: @params.code
+        if invite and invite.uses_left >= 1
+            Invites\create {
+                workshop_id: invite.workshop_id
+                user_id: @current_user
+            }
+            invite\update {
+                uses_left: invite.uses_left - 1
+            }
+    
 
 
     
