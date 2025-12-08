@@ -16,5 +16,5 @@ class DashboardApp extends lapis.Application
         POST: =>
             @output_table = db.query @params.query
             @output = JSON\encode_pretty(@output_table, nil, { pretty: true, align_keys: false, array_newline: true, indent: "|   " })
-            rendert: "admin"
+            render: "admin"
     }   
