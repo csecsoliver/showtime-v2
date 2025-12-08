@@ -101,5 +101,5 @@ class DashboardApp extends lapis.Application
         GET: =>
             status: 405, "Method Not Allowed"
         POST: =>
-            
+            @write "Not implemented yet."
     }

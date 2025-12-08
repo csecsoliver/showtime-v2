@@ -30,7 +30,7 @@ class WorkshopView extends Widget
             if @workshop.extra_text_visibility == 1
                 participations = @workshop.get_participations!
                 for i in *participations
-                    if i.user_id == @current_user_table.id
+                    if i.user_id == @current_user_table.id and i.approved == 1
                         p @workshop.extra_text
                         break
             elseif @workshop.extra_text_visibility == 2

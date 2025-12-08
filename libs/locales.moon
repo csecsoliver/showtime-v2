@@ -54,6 +54,7 @@ locales = {
         actions: "Actions"
         create_invite: "Create Invite"
         invited_users: "Invited Users"
+        workshop_full: "The workshop is full."
     }
     hu: {
         site_name: "ShowTime"
@@ -109,6 +110,7 @@ locales = {
         actions: "Műveletek"
         create_invite: "Meghívó létrehozása"
         invited_users: "Meghívott felhasználók"
+        workshop_full: "A foglalkozás betelt."
     }
 }
 locales.hu
