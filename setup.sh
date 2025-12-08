@@ -4,6 +4,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/openr
 sudo apt-get update
 sudo apt-get install openresty uuid-dev libmagickwand-dev luarocks libcurl4-openssl-dev libargon2-dev libssl-dev libsqlite3-dev -y
 
-sudo luarocks install lapis moonscript markdown lsqlite3 bcrypt lua-uuid luafilesystem magick Lua-curl CURL_INCDIR=/usr/include/x86_64-linux-gnu lume argon2 sendmail luasec
+sudo luarocks install lapis moonscript markdown lsqlite3 bcrypt lua-uuid luafilesystem magick lume argon2 sendmail luasec
+sudo env CURL_INCDIR=/usr/include/x86_64-linux-gnu luarocks install Lua-curl
 moonc .
 lapis migrate
