@@ -12,3 +12,4 @@ logs
 pico-main
 nginx.conf.compiled
 *.log
+env.moon

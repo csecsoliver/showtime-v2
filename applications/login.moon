@@ -57,7 +57,7 @@ class LoginApp extends lapis.Application
                 unless user
                     user = Users\create {
                         email: @params.email
-                        role: 99
+                        role: 10
                     }
                     log user.role
                 
