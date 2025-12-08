@@ -29,6 +29,7 @@ class extends lapis.Application
     @include "applications.login"
     @include "applications.dashboard"
     @include "applications.workshops"
+    @include "applications.admin"
     
     "/": =>
         render: "index"
