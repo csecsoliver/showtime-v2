@@ -3,9 +3,8 @@ locales = require "libs/locales"
 import Workshops, Users from require "models"
 class DashHome extends Widget
     content: =>
-        p @current_user .. ", welcome to your dashboard!"
         div id: "dash-workshop-list" , ->
-            h2 locales.workshops
+            h2 locales.workshops_dash
             p locales.workshops_description
             element "table", ->
                 thead ->
