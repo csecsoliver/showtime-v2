@@ -7,6 +7,7 @@ class DashWorkshopDetails extends Widget
         h1 locales.workshops_view_edit
         form method: "post" , ->
             workshop = Workshops\find @id
+            csrf_field!
             label for: "location", locales.workshop_location
             input type: "text", id: "location", name: "location", value: workshop.location or ""
             label for: "date", locales.workshop_date
@@ -52,8 +53,12 @@ class DashWorkshopDetails extends Widget
                         td participation.notes
                         td ->
                             if participation.approved == 0
-                                a href: "/dw/approve/" .. participation.id, locales.approve_participant
-                                text " | "
-                            a href: "/dw/remove/" .. participation.id, locales.remove_participant
+                                form action: "/dw/approve/" .. participation.id, method: "POST", ->
+                                    input type: "hidden", name: "csrf_token", value: @csrf_token
+                                    button type: "submit", locales.approve_participant
+                                text " "
+                            form action: "/dw/remove/" .. participation.id, method: "POST", onsubmit: "return confirm('" .. locales.remove_participant .. "?');", ->
+                                input type: "hidden", name: "csrf_token", value: @csrf_token
+                                button type: "submit", locales.remove_participant
 
             

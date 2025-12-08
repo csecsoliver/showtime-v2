@@ -66,26 +66,34 @@ class DashboardApp extends lapis.Application
                 @write locales.no_permission
     }
     
-    ["approve_participant": "/dw/approve/:part_id"]: =>
-        participation = Participations\find @params.part_id
-        if participation
-            workshop = Workshops\find participation.workshop_id
-            if workshop and workshop.user_id == @current_user_table.id
-                participation\update approved: 1
-                @write redirect_to: "/dw/" .. workshop.id
+    ["approve_participant": "/dw/approve/:part_id"]: respond_to {
+        GET: =>
+            status: 405, "Method Not Allowed"
+        POST: =>
+            participation = Participations\find @params.part_id
+            if participation
+                workshop = Workshops\find participation.workshop_id
+                if workshop and workshop.user_id == @current_user_table.id
+                    participation\update approved: 1
+                    @write redirect_to: "/dw/" .. workshop.id
+                else
+                    @write locales.no_permission
             else
-                @write locales.no_permission
-        else
-            @write locales.not_found
+                @write locales.not_found
+    }
     
-    ["remove_participant": "/dw/remove/:part_id"]: =>
-        participation = Participations\find @params.part_id
-        if participation
-            workshop = Workshops\find participation.workshop_id
-            if workshop and workshop.user_id == @current_user_table.id
-                participation\delete!
-                @write redirect_to: "/dw/" .. workshop.id
+    ["remove_participant": "/dw/remove/:part_id"]: respond_to {
+        GET: =>
+            status: 405, "Method Not Allowed"
+        POST: =>
+            participation = Participations\find @params.part_id
+            if participation
+                workshop = Workshops\find participation.workshop_id
+                if workshop and workshop.user_id == @current_user_table.id
+                    participation\delete!
+                    @write redirect_to: "/dw/" .. workshop.id
+                else
+                    @write locales.no_permission
             else
-                @write locales.no_permission
-        else
-            @write locales.not_found
+                @write locales.not_found
+    }

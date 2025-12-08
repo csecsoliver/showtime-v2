@@ -4,6 +4,7 @@ class DashWorkshopsNew extends Widget
     content: =>
         h1 locales.workshops_create_new
         form method: "post" , ->
+            csrf_field!
             label for: "location", locales.workshop_location
             input type: "text", id: "location", name: "location"
             label for: "date", locales.workshop_date

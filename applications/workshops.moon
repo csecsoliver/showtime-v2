@@ -23,30 +23,38 @@ class WorkshopApp extends lapis.Application
                 return
         render: "workshop_view"
 
-    ["workshop_signup": "/ws/:id"]: =>
-        unless @params.name
-            @write locales.error_message
-        @workshop = Workshops\find @params.id
-        unless @workshop
-            @write locales.not_found
-        if @workshop.visibility == 0
-            invite = Invites\find workshop_id: @workshop.id, user_id: @current_user_table.id
-            unless invite
-                @write locales.invite_only
-        Participations\create {
-            user_id: @current_user_table.id
-            workshop_id: @workshop.id
-            name: @params.name
-            notes: @params.notes or ""
-        }
-        redirect_to: "/wv/" .. @workshop.id
-    ["workshop_cancel_participation": "/wcp/:part_id"]: =>
-        participation = Participations\find @params.part_id
-        unless participation
-            @write locales.not_found
-        id = participation.workshop_id
-        participation\delete!
-        redirect_to: "/wv/" .. id
+    ["workshop_signup": "/ws/:id"]: respond_to {
+        GET: =>
+            status: 405, "Method Not Allowed"
+        POST: =>
+            unless @params.name
+                @write locales.error_message
+            @workshop = Workshops\find @params.id
+            unless @workshop
+                @write locales.not_found
+            if @workshop.visibility == 0
+                invite = Invites\find workshop_id: @workshop.id, user_id: @current_user_table.id
+                unless invite
+                    @write locales.invite_only
+            Participations\create {
+                user_id: @current_user_table.id
+                workshop_id: @workshop.id
+                name: @params.name
+                notes: @params.notes or ""
+            }
+            redirect_to: "/wv/" .. @workshop.id
+    }
+    ["workshop_cancel_participation": "/wcp/:part_id"]: respond_to {
+        GET: =>
+            status: 405, "Method Not Allowed"
+        POST: =>
+            participation = Participations\find @params.part_id
+            unless participation
+                @write locales.not_found
+            id = participation.workshop_id
+            participation\delete!
+            redirect_to: "/wv/" .. id
+    }
 
     ["workshops": "/wl"]: =>
         render: "workshops"

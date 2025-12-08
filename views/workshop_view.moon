@@ -52,8 +52,11 @@ class WorkshopView extends Widget
                         td if participation.approved == 1 then locales.approved else locales.pending
                         td participation.notes
                         td ->
-                            a href: "/wcp/" .. participation.id , locales.cancel_participation
+                            form action: "/wcp/" .. participation.id, method: "POST", onsubmit: "return confirm('" .. locales.cancel_participation .. "?');", ->
+                                input type: "hidden", name: "csrf_token", value: @csrf_token
+                                button type: "submit", locales.cancel_participation
         form action: "/ws/" .. @workshop.id, method: "POST", ->
+            csrf_field!
             label for: "name", locales.part_name
             input type: "text", name: "name", id: "name", required: true
             label for: "notes", locales.part_notes
