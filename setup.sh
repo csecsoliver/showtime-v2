@@ -17,5 +17,6 @@ sudo luarocks install argon2
 sudo luarocks install sendmail
 sudo luarocks install luasec
 sudo env CURL_INCDIR=/usr/include/x86_64-linux-gnu luarocks install Lua-curl
+sudo luarocks install json-lua
 moonc .
 lapis migrate
