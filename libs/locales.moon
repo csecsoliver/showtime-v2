@@ -58,6 +58,9 @@ locales = {
         readme: "Please read this before considering my project"
         invite_code: "Invite Code"
         invite_user: "Invite User"
+        invited_to_workshop: "You have been invited to the workshop at"
+        use_code_to_sign_up: "Use this code to sign up:"
+        workshop_invite_subject: "Workshop Invitation"
     }
     hu: {
         site_name: "ShowTime"
@@ -117,6 +120,9 @@ locales = {
         readme: "Kérlek, olvasd el ezt a projekt megtekintése előtt"
         invite_code: "Meghívó kód"
         invite_user: "Felhasználó meghívása"
+        invited_to_workshop: "Meghívást kaptál a foglalkozásra itt:"
+        use_code_to_sign_up: "Használd ezt a kódot a jelentkezéshez:"
+        workshop_invite_subject: "Foglalkozás Meghívó"
     }
 }
 locales.hu

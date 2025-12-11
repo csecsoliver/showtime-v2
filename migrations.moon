@@ -47,9 +47,11 @@ import create_table, types, add_column from require "lapis.db.schema"
         create_table "invites", {
             {"id", types.integer primary_key: true}
             {"workshop_id", types.integer}
-            {"user_id", types.integer}
+            {"user_id", types.integer default: -1}
             {"code", types.text}
             {"uses_left", types.integer default: 1}
         }
         -- add_column "posts", "thumbnail_path", types.text default: ""
+    [2]: =>
+        add_column "invites", "invited_email", types.text default: ""
 }

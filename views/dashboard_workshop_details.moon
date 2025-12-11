@@ -60,13 +60,14 @@ class DashWorkshopDetails extends Widget
                             form action: "/dw/remove/" .. participation.id, method: "POST", onsubmit: "return confirm('" .. locales.remove_participant .. "?');", ->
                                 input type: "hidden", name: "csrf_token", value: @csrf_token
                                 button type: "submit", locales.remove_participant
-        form action: "/dic/" .. workshop.id, method: "POST", style: "display: none", ->
+        form action: "/dic/" .. workshop.id, method: "POST", ->
             input type: "hidden", name: "csrf_token", value: @csrf_token
             label for: "user", locales.invite_user
-            element "select", id: "user", name: "user", ->
-                users = Users\select!
-                for user in *users
-                    element "option", value: user.id, user.email 
+            input type: "text", id: "emails", name: "emails", placeholder: "email1; email2; email3"
+            -- element "select", id: "user", name: "user", ->
+            --     users = Users\select!
+            --     for user in *users
+            --         element "option", value: user.id, user.email 
             label for: "invite_code", locales.invite_code
             input type: "text", id: "invite_code", name: "invite_code"
          

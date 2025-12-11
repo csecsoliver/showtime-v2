@@ -1,10 +1,12 @@
 lapis = require "lapis"
 import respond_to from require "lapis.application"
-import Users, Workshops, Participations from require "models" -- this is so stupid... I have to use lowercase here
+import Users, Workshops, Participations, Invites from require "models" -- this is so stupid... I have to use lowercase here
 log = require "libs/log"
 import parse_datetime_local from require "libs/time"
 import escape from require "lapis.util"
 locales = require "libs/locales"
+import hrt from require "libs/random"
+import send_mail from require "libs/sendmail"
 class DashboardApp extends lapis.Application
     @before_filter =>
         unless @current_user
@@ -101,5 +103,33 @@ class DashboardApp extends lapis.Application
         GET: =>
             status: 405, "Method Not Allowed"
         POST: =>
-            @write "Not implemented yet."
+            workshop = Workshops\find @params.id
+            if workshop and workshop.user_id == @current_user_table.id
+                invite_code = ""
+                unless @params.code and @params.code != ""
+                    invite_code = hrt 16
+                else
+                    invite_code = @params.code
+                
+                invited_emails = (@params.emails or "")\split(";")
+                for email in invited_emails
+                    email = email\gsub "%s+", ""  -- trim spaces
+                    if email != ""
+                        invite = Invites\create {
+                            workshop_id: workshop.id
+                            invited_email: email or ""
+                            code: invite_code
+                            uses_left: tonumber(@params.uses_left) or -1
+                        }
+                        send_mail(
+                            to_addr: email
+                            subject: locales.workshop_invite_subject
+                            body: "#{locales.invited_to_workshop} #{workshop.location}.
+
+#{locales.use_code_to_sign_up} #{@request.parsed_user.scheme}://#{@request.parsed_url.host}/i/#{invite.code}"
+                        )
+                
+                @write redirect_to: "/dw/" .. workshop.id
+            else
+                @write locales.no_permission
     }
