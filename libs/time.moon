@@ -1,3 +1,4 @@
+log = require "libs/log"
 parse_datetime_local = (str) ->
     year, month, day, hour, min, sec = str\match "(%d+)-(%d+)-(%d+)T(%d+):(%d+):?(%d*)"
     os.time {
@@ -10,6 +11,8 @@ parse_datetime_local = (str) ->
     }
 
 to_datetime_local = (timestamp) ->
+    log timestamp
+    log os.time!
     os.date "%Y-%m-%dT%H:%M", timestamp
 
 { :parse_datetime_local, :to_datetime_local }

@@ -1,23 +1,23 @@
 import Widget from require "lapis.html"
 locales = require "libs/locales"
-import Workshops, Participations from require "models"
+import Workshops, Participations, Users from require "models"
 import to_datetime_local from require "libs/time"
 class DashWorkshopDetails extends Widget
     content: =>
         h1 locales.workshops_view_edit
+        workshop = Workshops\find @id
         form method: "post" , ->
-            workshop = Workshops\find @id
             csrf_field!
             label for: "location", locales.workshop_location
             input type: "text", id: "location", name: "location", value: workshop.location or ""
             label for: "date", locales.workshop_date
-            input type: "datetime-local", id: "date", name: "date", required: true, value: to_datetime_local(workshop.time)
-            i
+            input type: "datetime-local", id: "date", name: "date", required: true, value: to_datetime_local(workshop.date)
             label for: "visibility", locales.workshop_visibility
+
             element "select", id: "visibility", name: "visibility", ->
-                element "option", value: "0", locales.workshop_invite_only, selected: (workshop.visibility == 0)
-                element "option", value: "1", locales.workshop_unlisted, selected: (workshop.visibility == 1)
-                element "option", value: "2", locales.workshop_public, selected: (workshop.visibility == 2)
+                element "option", value: "0", locales.workshop_invite_only, selected: (workshop.visibility == 0) and "selected" or nil
+                element "option", value: "1", locales.workshop_unlisted, selected: (workshop.visibility == 1) and "selected" or nil
+                element "option", value: "2", locales.workshop_public, selected: (workshop.visibility == 2) and "selected" or nil
     
 
 
@@ -28,9 +28,9 @@ class DashWorkshopDetails extends Widget
             
             label for: "extra_text_visibility", locales.workshop_extra_text_visibility
             element "select", id: "extra_text_visibility", name: "extra_text_visibility", ->
-                element "option", value: "0", locales.workshop_extra_text_visibility_organizers_only, selected: (workshop.extra_text_visibility == 0)
-                element "option", value: "1", locales.workshop_extra_text_visibility_participants, selected: (workshop.extra_text_visibility == 1)
-                element "option", value: "2", locales.workshop_extra_text_visibility_everyone, selected: (workshop.extra_text_visibility == 2)
+                element "option", value: "0", locales.workshop_extra_text_visibility_organizers_only, selected: (workshop.extra_text_visibility == 0) and "selected" or nil
+                element "option", value: "1", locales.workshop_extra_text_visibility_participants, selected: (workshop.extra_text_visibility == 1) and "selected" or nil
+                element "option", value: "2", locales.workshop_extra_text_visibility_everyone, selected: (workshop.extra_text_visibility == 2) and "selected" or nil
             label for: "extra_text", locales.workshop_extra_text
             textarea id: "extra_text", name: "extra_text", value: workshop.extra_text or ""
             
@@ -60,15 +60,15 @@ class DashWorkshopDetails extends Widget
                             form action: "/dw/remove/" .. participation.id, method: "POST", onsubmit: "return confirm('" .. locales.remove_participant .. "?');", ->
                                 input type: "hidden", name: "csrf_token", value: @csrf_token
                                 button type: "submit", locales.remove_participant
-        -- form action: "/dic/" .. workshop.id, method: "POST", ->
-        --     input type: "hidden", name: "csrf_token", value: @csrf_token
-        --     label for: "user", locales.invited_users
-        --     element "select", id: "user", name: "user" ->
-        --         users = Users\select!
-        --         for user in *users
-        --             element "option", value: user.id, user.email 
-        --     label for: "invite_code", locales.invite_code
-        --     input type: "text", id: "invite_code", name: "invite_code"
-            
-        --     button type: "submit", locales.create_invite
+        form action: "/dic/" .. workshop.id, method: "POST", style: "display: none", ->
+            input type: "hidden", name: "csrf_token", value: @csrf_token
+            label for: "user", locales.invite_user
+            element "select", id: "user", name: "user", ->
+                users = Users\select!
+                for user in *users
+                    element "option", value: user.id, user.email 
+            label for: "invite_code", locales.invite_code
+            input type: "text", id: "invite_code", name: "invite_code"
+         
+            button type: "submit", locales.create_invite
             

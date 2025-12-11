@@ -32,7 +32,7 @@ class WorkshopApp extends lapis.Application
             @workshop = Workshops\find @params.id
             unless @workshop
                 @write locales.not_found
-            if table.getn(@workshop.get_participations!) >= @workshop.max_participants and @workshop.max_participants != -1
+            if table.getn(@workshop\get_participations!) >= @workshop.max_participants and @workshop.max_participants != -1
                 @write locales.workshop_full
 
             if @workshop.visibility == 0
