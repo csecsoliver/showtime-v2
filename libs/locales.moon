@@ -62,6 +62,7 @@ locales = {
         use_code_to_sign_up: "Use this link to sign up:"
         workshop_invite_subject: "Workshop Invitation"
         emailcode: "Input the code sent to your email:"
+        signup_note: "To sign up, just input an (real) email, and click login. An email with a code will be sent to you, which you can then use to log in."
     }
     hu: {
         site_name: "ShowTime"
@@ -118,7 +119,7 @@ locales = {
         create_invite: "Meghívó létrehozása"
         invited_users: "Meghívott felhasználók"
         workshop_full: "A foglalkozás betelt."
-        readme: "Kérlek, olvasd el ezt a projekt megtekintése előtt"
+        readme: ""
         invite_code: "Meghívó kód"
         invite_user: "Felhasználó meghívása"
         invited_to_workshop: "Meghívást kaptál a foglalkozásra itt:"

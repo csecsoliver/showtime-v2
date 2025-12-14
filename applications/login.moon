@@ -60,7 +60,7 @@ class LoginApp extends lapis.Application
                         email: @params.email
                         role: 10
                     }
-                    log user.role
+                    -- log user.role
             
                 emailcode = Emailcodes\create {
                     user_id: user.id

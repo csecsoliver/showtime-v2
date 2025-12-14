@@ -11,8 +11,6 @@ parse_datetime_local = (str) ->
     }
 
 to_datetime_local = (timestamp) ->
-    log timestamp
-    log os.time!
     os.date "%Y-%m-%dT%H:%M", timestamp
 
 { :parse_datetime_local, :to_datetime_local }

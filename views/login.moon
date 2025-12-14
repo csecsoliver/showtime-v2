@@ -25,3 +25,4 @@ class IndexPage extends Widget
                 --br!
             br!
             button type: "submit",  locales.login
+            p locales.signup_note

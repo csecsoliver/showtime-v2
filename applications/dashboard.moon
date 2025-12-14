@@ -17,7 +17,7 @@ class DashboardApp extends lapis.Application
             @write redirect_to: (@url_for "login") .. "?referrer=" .. escape(@referrer)
             return
         unless @current_user_table.role >= 20
-            log @current_user_table.role
+            -- log @current_user_table.role
             @write locales.no_permission
     ["dh": "/dh"]: =>
         render: "dashboard_home"
@@ -122,7 +122,7 @@ class DashboardApp extends lapis.Application
                 if emails_list
                     location = escape(workshop.location or "")
                     for email in *emails_list
-                        log email .. "<<<"
+                        -- log email .. "<<<"
                         if email != "" and ngx.re.match(email, email_validator, "jo")
 
                             send_mail(
