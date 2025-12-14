@@ -8,6 +8,7 @@ locales = require "libs/locales"
 import hrt from require "libs/random"
 import send_mail from require "libs/sendmail"
 import escape from require "lapis.html"
+import split from require "libs/string"
 ngx = require "ngx"
 class DashboardApp extends lapis.Application
     @before_filter =>
@@ -108,27 +109,28 @@ class DashboardApp extends lapis.Application
             workshop = Workshops\find @params.id
             if workshop and workshop.user_id == @current_user_table.id
                 invite_code = hrt 16
-                else
-                    invite_code = @params.code
                 
                 invite = Invites\create { -- this is a generic invite, not tied to users yet, 
                     workshop_id: workshop.id
                     code: invite_code
-                    uses_left: tonumber(@params.uses_left)
+                    uses_left: tonumber(@params.uses) or 1
                 }
                 emails = @params.emails
                 email_validator = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-                emails_list, err = ngx.re.split(emails or "", "[;\\s]+", "jo")
+                emails_list = split emails, "[^;\\s]+", "jo"
+                
                 if emails_list
                     location = escape(workshop.location or "")
                     for email in *emails_list
+                        log email .. "<<<"
                         if email != "" and ngx.re.match(email, email_validator, "jo")
-                            send_mail(
-                                to_addr: email
-                                subject: locales.workshop_invite_subject
-                                body: "#{locales.invited_to_workshop} #{location}.
 
-#{locales.use_code_to_sign_up} #{@request.parsed_user.scheme}://#{@request.parsed_url.host}/i/#{invite.code}"
+                            send_mail(
+                                email,
+                                locales.workshop_invite_subject,
+                                "#{locales.invited_to_workshop} #{location}.
+
+#{locales.use_code_to_sign_up} #{@req.parsed_url.scheme}://#{@req.parsed_url.host}/i/#{invite.code}"
                             )
                 
                 @write redirect_to: "/dw/" .. workshop.id

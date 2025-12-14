@@ -59,7 +59,7 @@ locales = {
         invite_code: "Invite Code"
         invite_user: "Invite User"
         invited_to_workshop: "You have been invited to the workshop at"
-        use_code_to_sign_up: "Use this code to sign up:"
+        use_code_to_sign_up: "Use this link to sign up:"
         workshop_invite_subject: "Workshop Invitation"
         emailcode: "Input the code sent to your email:"
     }
@@ -122,7 +122,7 @@ locales = {
         invite_code: "Meghívó kód"
         invite_user: "Felhasználó meghívása"
         invited_to_workshop: "Meghívást kaptál a foglalkozásra itt:"
-        use_code_to_sign_up: "Használd ezt a kódot a jelentkezéshez:"
+        use_code_to_sign_up: "Használd ezt a linket a jelentkezéshez:"
         workshop_invite_subject: "Foglalkozás Meghívó"
         emailcode: "Add meg az e-mailben kapott kódot:"
     }

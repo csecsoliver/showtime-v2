@@ -71,8 +71,8 @@ class DashWorkshopDetails extends Widget
             --     users = Users\select!
             --     for user in *users
             --         element "option", value: user.id, user.email 
-            label for: "invite_code", locales.invite_code
-            input type: "text", id: "invite_code", name: "invite_code"
-         
+            label for: "uses", locales.invite_code
+            input type: "number", id: "uses", name: "uses", value: "1", min: "1"
+
             button type: "submit", locales.create_invite
             

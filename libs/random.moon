@@ -1,5 +1,5 @@
 log = require "libs/log"
-hrt = (digits) -> -- human-readable token, don't think of the wrong thing
+hrt = (digits) -> -- human-readable token, don't get your hopes up
     f = io.open("/dev/urandom", "rb")
     log digits
     rand_bytes = f\read(digits)
