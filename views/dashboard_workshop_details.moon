@@ -14,12 +14,14 @@ class DashWorkshopDetails extends Widget
             label for: "date", locales.workshop_date
             input type: "datetime-local", id: "date", name: "date", required: true, value: to_datetime_local(workshop.date)
             label for: "visibility", locales.workshop_visibility
-
+            
+            log workshop.visibility
+            log tostring((workshop.visibility == 2) or nil)
             element "select", id: "visibility", name: "visibility", ->
-                element "option", value: "0", locales.workshop_invite_only, selected: (workshop.visibility == 0) and "selected" or nil
-                element "option", value: "1", locales.workshop_unlisted, selected: (workshop.visibility == 1) and "selected" or nil
-                element "option", value: "2", locales.workshop_public, selected: (workshop.visibility == 2) and "selected" or nil
-    
+                element "option", value: "0", selected: (workshop.visibility == 0) or nil, locales.workshop_invite_only
+                element "option", value: "1", selected: (workshop.visibility == 1) or nil, locales.workshop_unlisted
+                element "option", value: "2", selected: (workshop.visibility == 2) or nil, locales.workshop_public
+
 
 
             label for: "max_participants", locales.workshop_max_participants
@@ -28,6 +30,7 @@ class DashWorkshopDetails extends Widget
             input type: "text", id: "sponsor", name: "sponsor", value: workshop.sponsor or "", maxlength: "200"
             
             label for: "extra_text_visibility", locales.workshop_extra_text_visibility
+            log workshop.extra_text_visibility
             element "select", id: "extra_text_visibility", name: "extra_text_visibility", ->
                 element "option", value: "0", locales.workshop_extra_text_visibility_organizers_only, selected: (workshop.extra_text_visibility == 0) and "selected" or nil
                 element "option", value: "1", locales.workshop_extra_text_visibility_participants, selected: (workshop.extra_text_visibility == 1) and "selected" or nil
