@@ -34,7 +34,7 @@ class DashWorkshopDetails extends Widget
                 element "option", value: "1", locales.workshop_extra_text_visibility_participants, selected: (workshop.extra_text_visibility == 1) and "selected" or nil
                 element "option", value: "2", locales.workshop_extra_text_visibility_everyone, selected: (workshop.extra_text_visibility == 2) and "selected" or nil
             label for: "extra_text", locales.workshop_extra_text
-            textarea id: "extra_text", name: "extra_text", value: workshop.extra_text or "", maxlength: "200"
+            textarea id: "extra_text", name: "extra_text", maxlength: "200", workshop.extra_text or ""
             
             button type: "submit", locales.workshops_save
 
