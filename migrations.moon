@@ -1,4 +1,4 @@
-import create_table, types, add_column from require "lapis.db.schema"
+import create_table, types, add_column, drop_column from require "lapis.db.schema"
 
 {
     [1]: =>
@@ -44,14 +44,22 @@ import create_table, types, add_column from require "lapis.db.schema"
             {"user_id", types.integer}
             {"expiry", types.integer}
         }
-        create_table "invites", {
+        create_table "invites", { -- these are generic invites, not tied to specific users
             {"id", types.integer primary_key: true}
             {"workshop_id", types.integer}
-            {"user_id", types.integer default: -1}
+            {"user_id", types.integer default: -1} -- removed 
             {"code", types.text}
             {"uses_left", types.integer default: 1}
         }
         -- add_column "posts", "thumbnail_path", types.text default: ""
     [2]: =>
-        add_column "invites", "invited_email", types.text default: ""
+        add_column "invites", "invited_email", types.text default: "" --removed
+    [3]: =>
+        drop_column "invites", "invited_email"
+        drop_column "invites", "user_id"
+        create_table "claimed_invites", { -- these are invites that have been claimed by specific users
+            {"id", types.integer primary_key: true}
+            {"workshop_id", types.integer}
+            {"user_id", types.integer}
+        }
 }

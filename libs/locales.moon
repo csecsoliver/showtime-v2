@@ -61,6 +61,7 @@ locales = {
         invited_to_workshop: "You have been invited to the workshop at"
         use_code_to_sign_up: "Use this code to sign up:"
         workshop_invite_subject: "Workshop Invitation"
+        emailcode: "Input the code sent to your email:"
     }
     hu: {
         site_name: "ShowTime"
@@ -123,6 +124,7 @@ locales = {
         invited_to_workshop: "Meghívást kaptál a foglalkozásra itt:"
         use_code_to_sign_up: "Használd ezt a kódot a jelentkezéshez:"
         workshop_invite_subject: "Foglalkozás Meghívó"
+        emailcode: "Add meg az e-mailben kapott kódot:"
     }
 }
 locales.hu

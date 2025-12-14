@@ -6,7 +6,7 @@ class DashWorkshopsNew extends Widget
         form method: "post" , ->
             csrf_field!
             label for: "location", locales.workshop_location
-            input type: "text", id: "location", name: "location"
+            input type: "text", id: "location", name: "location", maxlength: "200"
             label for: "date", locales.workshop_date
             input type: "datetime-local", id: "date", name: "date", required: true
 
@@ -19,9 +19,9 @@ class DashWorkshopsNew extends Widget
             label for: "max_participants", locales.workshop_max_participants
             input type: "text", id: "max_participants", name: "max_participants", min: "1", value: "1"
             label for: "sponsor", locales.workshop_sponsor
-            input type: "text", id: "sponsor", name: "sponsor"
+            input type: "text", id: "sponsor", name: "sponsor", maxlength: "200"
             label for: "extra_text", locales.workshop_extra_text
-            textarea id: "extra_text", name: "extra_text"
+            textarea id: "extra_text", name: "extra_text", maxlength: "200"
 
             label for: "extra_text_visibility", locales.workshop_extra_text_visibility
             element "select", id: "extra_text_visibility", name: "extra_text_visibility", ->

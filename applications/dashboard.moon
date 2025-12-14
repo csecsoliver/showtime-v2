@@ -7,6 +7,8 @@ import escape from require "lapis.util"
 locales = require "libs/locales"
 import hrt from require "libs/random"
 import send_mail from require "libs/sendmail"
+import escape from require "lapis.html"
+ngx = require "ngx"
 class DashboardApp extends lapis.Application
     @before_filter =>
         unless @current_user
@@ -105,29 +107,29 @@ class DashboardApp extends lapis.Application
         POST: =>
             workshop = Workshops\find @params.id
             if workshop and workshop.user_id == @current_user_table.id
-                invite_code = ""
-                unless @params.code and @params.code != ""
-                    invite_code = hrt 16
+                invite_code = hrt 16
                 else
                     invite_code = @params.code
                 
-                invited_emails = (@params.emails or "")\split(";")
-                for email in invited_emails
-                    email = email\gsub "%s+", ""  -- trim spaces
-                    if email != ""
-                        invite = Invites\create {
-                            workshop_id: workshop.id
-                            invited_email: email or ""
-                            code: invite_code
-                            uses_left: tonumber(@params.uses_left) or -1
-                        }
-                        send_mail(
-                            to_addr: email
-                            subject: locales.workshop_invite_subject
-                            body: "#{locales.invited_to_workshop} #{workshop.location}.
+                invite = Invites\create { -- this is a generic invite, not tied to users yet, 
+                    workshop_id: workshop.id
+                    code: invite_code
+                    uses_left: tonumber(@params.uses_left)
+                }
+                emails = @params.emails
+                email_validator = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+                emails_list, err = ngx.re.split(emails or "", "[;\\s]+", "jo")
+                if emails_list
+                    location = escape(workshop.location or "")
+                    for email in *emails_list
+                        if email != "" and ngx.re.match(email, email_validator, "jo")
+                            send_mail(
+                                to_addr: email
+                                subject: locales.workshop_invite_subject
+                                body: "#{locales.invited_to_workshop} #{location}.
 
 #{locales.use_code_to_sign_up} #{@request.parsed_user.scheme}://#{@request.parsed_url.host}/i/#{invite.code}"
-                        )
+                            )
                 
                 @write redirect_to: "/dw/" .. workshop.id
             else
