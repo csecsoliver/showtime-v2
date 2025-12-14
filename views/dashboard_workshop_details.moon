@@ -15,8 +15,7 @@ class DashWorkshopDetails extends Widget
             input type: "datetime-local", id: "date", name: "date", required: true, value: to_datetime_local(workshop.date)
             label for: "visibility", locales.workshop_visibility
             
-            log workshop.visibility
-            log tostring((workshop.visibility == 2) or nil)
+            
             element "select", id: "visibility", name: "visibility", ->
                 element "option", value: "0", selected: (workshop.visibility == 0) or nil, locales.workshop_invite_only
                 element "option", value: "1", selected: (workshop.visibility == 1) or nil, locales.workshop_unlisted
