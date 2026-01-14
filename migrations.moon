@@ -51,7 +51,6 @@ import create_table, types, add_column, drop_column from require "lapis.db.schem
             {"code", types.text}
             {"uses_left", types.integer default: 1}
         }
-        -- add_column "posts", "thumbnail_path", types.text default: ""
     [2]: =>
         add_column "invites", "invited_email", types.text default: "" --removed
     [3]: =>

@@ -1,7 +1,7 @@
 log = require "libs/log"
 hrt = (digits) -> -- human-readable token, don't get your hopes up
-    f = io.open("/dev/urandom", "rb")
-    rand_bytes = f\read(digits)
+    f = io.open "/dev/urandom", "rb" 
+    rand_bytes = f\read digits 
     f\close!
     hex = ""
 

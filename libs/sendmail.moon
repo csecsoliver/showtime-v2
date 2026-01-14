@@ -86,12 +86,17 @@ smtp_send = (from_addr, to_addr, smtp_host, smtp_port, smtp_user, smtp_pass, sub
     
     -- Send email content
     date = os.date("!%a, %d %b %Y %H:%M:%S +0000")
+    
+    -- Encode subject for non-ASCII characters (RFC 2047)
+    encoded_subject = "=?UTF-8?B?" .. mime.b64(subject) .. "?="
+    
     message = table.concat({
         "From: #{from_addr}",
         "To: #{to_addr}",
-        "Subject: #{subject}",
+        "Subject: #{encoded_subject}",
         "Date: #{date}",
         "Content-Type: text/plain; charset=UTF-8",
+        "Content-Transfer-Encoding: 8bit",
         "",
         body,
         "."
