@@ -1,5 +1,6 @@
 import Widget from require "lapis.html"
 locales = require "libs/locales"
+os = require "os"
 class MainLayout extends Widget
     content: =>
         raw "<!DOCTYPE HTML>"
@@ -39,4 +40,4 @@ class MainLayout extends Widget
                 main ->
                     @content_for "inner"
                 footer ->
-                    p "© 2025 ShowTime"
+                    p os.date("%Y") .. " ShowTime"
