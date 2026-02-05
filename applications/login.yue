@@ -32,7 +32,7 @@ class LoginApp extends lapis.Application
                     emailcode\delete!
                     @write redirect_to: (referrer)
                 else
-                    @error_message = "Wrong code"
+                    @error_message = locales.login_code_wrong
                     @nextstep = "emailcode"
                     @email = @params.email
                     @write render: "login"
@@ -68,8 +68,8 @@ class LoginApp extends lapis.Application
                 }
                 send_mail(
                     @params.email,
-                    "Your login code",
-                    "Your login code is: " .. tostring(emailcode.code)
+                    locales.login_code_email_subject,
+                    locales.login_code_email_body .. tostring(emailcode.code)
                 )
                 @nextstep = "emailcode"
                 @email = user.email
