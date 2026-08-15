@@ -5,9 +5,7 @@ log = require "libs/log"
 JSON = require "JSON"
 class DashboardApp extends lapis.Application
     @before_filter =>
-        unless @current_user
-            @write status: 404, "hell nah"
-        unless @current_user_table.role >= 99
+        unless @current_user and @current_user_table.role >= 99
             @write status: 404, "hell nah"
             
     ["admin": "/hmmthisshouldnotbeaccessed"]: respond_to {

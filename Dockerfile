@@ -19,4 +19,4 @@ RUN luarocks install Lua-curl CURL_INCDIR=/usr/include/x86_64-linux-gnu
 RUN luarocks install json-lua
 WORKDIR /app
 EXPOSE 8080
-CMD yue -w . & lapis server
+CMD sh -c "yue -c . && (yue -w . &) && lapis server"

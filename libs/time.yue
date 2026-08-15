@@ -1,6 +1,7 @@
 log = require "libs/log"
 parse_datetime_local = (str) ->
-    year, month, day, hour, min, sec = str\match "(%d+)-(%d+)-(%d+)T(%d+):(%d+):?(%d*)"
+    year, month, day, hour, min, sec = (str or "")\match "(%d+)-(%d+)-(%d+)T(%d+):(%d+):?(%d*)"
+    return nil unless year -- missing/garbage date: caller keeps the column default
     os.time {
         year: tonumber year
         month: tonumber month

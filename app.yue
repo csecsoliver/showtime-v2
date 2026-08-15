@@ -9,16 +9,18 @@ class extends lapis.Application
     @before_filter =>
         -- Apply CSRF protection to POST requests
         csrf_protect = csrf.csrf_middleware {
-            exempt_paths: {"/l"} -- Exempt login route from CSRF validation
+            exempt_paths: {"^/l$"} -- Exempt login route from CSRF validation (anchored: it's a lua pattern)
         }
-        csrf_protect(@)
-        
+        unless csrf_protect(@) == true -- the result has to be acted on, it only set @status before
+            @write {status: 403, layout: false, "Invalid CSRF token"}
+            return
+
         -- Load user from session
         if @session.token
             token = Sessiontokens\find token: @session.token
             if token
                 user = token\get_user!
-                if (user.id) and (token.expiry > os.time!)
+                if user and (token.expiry > os.time!)
                     @current_user = user.email
                     @current_user_table = user
         
@@ -36,5 +38,5 @@ class extends lapis.Application
     handle_404: =>
         hallofshame "Someone was naughty again!"
         hallofshame "Request for path: " .. @req.parsed_url.path.. " from IP: " .. (@req.headers["X-Forwarded-For"] or ngx.var.remote_addr)
-        @req.headers["User-Agent"] and hallofshame "User-Agent: " .. @req.headers["User-Agent"]
-        "404 Not Found"
+        hallofshame "User-Agent: " .. @req.headers["User-Agent"] if @req.headers["User-Agent"]
+        {status: 404, "404 Not Found"}

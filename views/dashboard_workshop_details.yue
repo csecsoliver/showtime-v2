@@ -8,12 +8,12 @@ class DashWorkshopDetails extends Widget
         h1 locales.workshops_view_edit
         workshop = Workshops\find @id
         form method: "post" , ->
-            csrf_field!
-            label for: "location", locales.workshop_location
+            raw @csrf_field -- csrf_field! rendered a literal <csrf_field> tag
+            label "for": "location", locales.workshop_location
             input type: "text", id: "location", name: "location", value: workshop.location or "", maxlength: "200"
-            label for: "date", locales.workshop_date
+            label "for": "date", locales.workshop_date
             input type: "datetime-local", id: "date", name: "date", required: true, value: to_datetime_local(workshop.date)
-            label for: "visibility", locales.workshop_visibility
+            label "for": "visibility", locales.workshop_visibility
             
             
             element "select", id: "visibility", name: "visibility", ->
@@ -23,17 +23,17 @@ class DashWorkshopDetails extends Widget
 
 
 
-            label for: "max_participants", locales.workshop_max_participants
+            label "for": "max_participants", locales.workshop_max_participants
             input type: "text", id: "max_participants", name: "max_participants", min: "1", value: workshop.max_participants
-            label for: "sponsor", locales.workshop_sponsor
+            label "for": "sponsor", locales.workshop_sponsor
             input type: "text", id: "sponsor", name: "sponsor", value: workshop.sponsor or "", maxlength: "200"
             
-            label for: "extra_text_visibility", locales.workshop_extra_text_visibility
+            label "for": "extra_text_visibility", locales.workshop_extra_text_visibility
             element "select", id: "extra_text_visibility", name: "extra_text_visibility", ->
                 element "option", value: "0", locales.workshop_extra_text_visibility_organizers_only, selected: (workshop.extra_text_visibility == 0) and "selected" or nil
                 element "option", value: "1", locales.workshop_extra_text_visibility_participants, selected: (workshop.extra_text_visibility == 1) and "selected" or nil
                 element "option", value: "2", locales.workshop_extra_text_visibility_everyone, selected: (workshop.extra_text_visibility == 2) and "selected" or nil
-            label for: "extra_text", locales.workshop_extra_text
+            label "for": "extra_text", locales.workshop_extra_text
             textarea id: "extra_text", name: "extra_text", maxlength: "200", workshop.extra_text or ""
             
             button type: "submit", locales.workshops_save
@@ -46,7 +46,7 @@ class DashWorkshopDetails extends Widget
                     th locales.name
                     th locales.status
                     th locales.note
-                    th locales.user
+                    th locales.email
                     th locales.actions
             tbody ->
                 for participation in *participations
@@ -66,13 +66,13 @@ class DashWorkshopDetails extends Widget
                                 button type: "submit", locales.remove_participant
         form action: "/dic/" .. workshop.id, method: "POST", ->
             input type: "hidden", name: "csrf_token", value: @csrf_token
-            label for: "user", locales.invite_user
+            label "for": "user", locales.invite_user
             input type: "text", id: "emails", name: "emails", placeholder: "email1; email2; email3"
             -- element "select", id: "user", name: "user", ->
             --     users = Users\select!
             --     for user in *users
             --         element "option", value: user.id, user.email 
-            label for: "uses", locales.invite_uses
+            label "for": "uses", locales.invite_uses
             input type: "number", id: "uses", name: "uses", value: "1", min: "1"
 
             button type: "submit", locales.create_invite

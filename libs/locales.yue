@@ -130,6 +130,7 @@ locales = {
         use_code_to_sign_up: "Használd ezt a linket a jelentkezéshez:"
         workshop_invite_subject: "Foglalkozás Meghívó"
         emailcode: "Add meg az e-mailben kapott kódot:"
+        signup_note: "A bejelentkezéshez add meg egy (valódi) e-mail címed, és kattints a bejelentkezés gombra. Egy kódot küldünk e-mailben, amivel be tudsz lépni."
         invite_uses: "A meghívó felhasználásainak száma"
         login_code_email_subject: "ShowTime Bejelentkezési kód"
         login_code_email_body: "A bejelentkezési kódod: "

@@ -7,6 +7,8 @@ import send_mail from require "libs/sendmail"
 log = require "libs/log"
 openssl_rand = require "openssl.rand"
 import hrt from require "libs/random"
+locales = require "libs/locales"
+db = require "lapis.db"
 class LoginApp extends lapis.Application
     [login: "/l"]: respond_to {
         GET: =>
@@ -18,7 +20,7 @@ class LoginApp extends lapis.Application
                 emailcode = Emailcodes\find code: @params.code
                 user = Users\find email: @params.email
                 -- wow this was insecure af before
-                if emailcode and emailcode.code == @params.code and emailcode.user_id == user.id
+                if emailcode and user and emailcode.user_id == user.id
                     token = Sessiontokens\create {
                         user_id: emailcode.user_id
                         expiry: os.time! + 7200 -- 2 hours instead of 100 hours
@@ -38,7 +40,7 @@ class LoginApp extends lapis.Application
                     @write render: "login"
             elseif @params.password
                 user = Users\find(email: @params.email)
-                if argon2.verify(user.passhash, @params.password)
+                if user and user.passhash != "" and argon2.verify(user.passhash, @params.password)
                     token = Sessiontokens\create {
                         user_id: user.id
                         expiry: os.time! + 7200 -- 2 hours instead of 100 hours
@@ -51,7 +53,7 @@ class LoginApp extends lapis.Application
                         referrer = @params.referrer
                     @write redirect_to: (referrer)
                 else
-                    @error_message = "Wrong password"
+                    @error_message = locales.password_error
                     @write render: "login"
             elseif @params.option == "email"
                 user = Users\find(email: @params.email)
@@ -62,6 +64,7 @@ class LoginApp extends lapis.Application
                     }
                     -- log user.role
             
+                db.delete "email_codes", user_id: user.id -- old codes stayed valid forever
                 emailcode = Emailcodes\create {
                     user_id: user.id
                     code: hrt 3

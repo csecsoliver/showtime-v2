@@ -5,7 +5,7 @@ class DashHome extends Widget
     content: =>
         div id: "dash-workshop-list" , ->
             h2 locales.workshops_dash
-            p locales.workshops_description
+            p locales.dash_workshops_desc
             element "table", ->
                 thead ->
                     tr ->

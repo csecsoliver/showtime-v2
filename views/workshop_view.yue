@@ -56,10 +56,10 @@ class WorkshopView extends Widget
                                 input type: "hidden", name: "csrf_token", value: @csrf_token
                                 button type: "submit", locales.cancel_participation
         form action: "/ws/" .. @workshop.id, method: "POST", ->
-            csrf_field!
-            label for: "name", locales.part_name
+            raw @csrf_field -- csrf_field! rendered a literal <csrf_field> tag
+            label "for": "name", locales.part_name
             input type: "text", name: "name", id: "name", required: true
-            label for: "notes", locales.part_notes
+            label "for": "notes", locales.part_notes
             textarea name: "notes", id: "notes"
             button type: "submit", locales.signup
         

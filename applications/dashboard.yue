@@ -7,7 +7,6 @@ import escape from require "lapis.util"
 locales = require "libs/locales"
 import hrt from require "libs/random"
 import send_mail from require "libs/sendmail"
-import escape from require "lapis.html"
 import split from require "libs/string"
 ngx = require "ngx"
 class DashboardApp extends lapis.Application
@@ -25,13 +24,13 @@ class DashboardApp extends lapis.Application
         GET: =>
             render: "dashboard_workshops_new"
         POST: =>
-            location = @params.location
+            location = (@params.location or "")\sub(1, 200)
             date = parse_datetime_local @params.date
             user = Users\find email: @current_user
             visibility = @params.visibility
             max_participants = tonumber @params.max_participants or -1
-            sponsor = @params.sponsor or "none"
-            extra_text = @params.extra_text or ""
+            sponsor = (@params.sponsor or "none")\sub(1, 200)
+            extra_text = (@params.extra_text or "")\sub(1, 200)
             extra_text_visibility = tonumber @params.extra_text_visibility or 0
             workshop = Workshops\create {
                 user_id: user.id
@@ -58,12 +57,12 @@ class DashboardApp extends lapis.Application
             workshop = Workshops\find @params.id
             if workshop and workshop.user_id == @current_user_table.id
                 workshop\update {
-                    location: @params.location
+                    location: (@params.location or "")\sub(1, 200)
                     date: parse_datetime_local @params.date
                     visibility: @params.visibility
                     max_participants: tonumber @params.max_participants or -1
-                    sponsor: @params.sponsor or "none"
-                    extra_text: @params.extra_text or ""
+                    sponsor: (@params.sponsor or "none")\sub(1, 200)
+                    extra_text: (@params.extra_text or "")\sub(1, 200)
                     extra_text_visibility: tonumber @params.extra_text_visibility or 0
                 }
                 @write redirect_to: "/dw/" .. workshop.id
@@ -120,7 +119,7 @@ class DashboardApp extends lapis.Application
                 emails_list = split emails, "[^;\\s]+", "jo"
                 
                 if emails_list
-                    location = escape(workshop.location or "")
+                    location = workshop.location or "" -- plain text mail, no html escaping
                     for email in *emails_list
                         -- log email .. "<<<"
                         if email != "" and ngx.re.match(email, email_validator, "jo")
