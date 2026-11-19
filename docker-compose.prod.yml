@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    user: "${UID:-1000}:${GID:-1000}"
+    ports:
+      - "8367:8080"
+    volumes:  
+      - .:/app:z   # :z relabels the bind mount for SELinux (Fedora/openSUSE); harmless elsewhere
+    environment:
+      - LAPIS_ENVIRONMENT=production
