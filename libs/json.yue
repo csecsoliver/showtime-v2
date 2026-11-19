@@ -1,0 +1,37 @@
+-- Minimal JSON encoder, replaces the json-lua rock.
+-- Only used by the admin query viewer, so it just needs to be readable.
+
+json = {}
+
+escape = (s) ->
+    s = tostring(s)
+    s = s\gsub('\\', '\\\\')
+    s = s\gsub('"', '\\"')
+    s = s\gsub('\n', '\\n')
+    s = s\gsub('\r', '\\r')
+    s = s\gsub('\t', '\\t')
+    s
+
+json.encode = (v, indent = "") ->
+    t = type(v)
+    switch t
+        when "nil" then "null"
+        when "boolean" then tostring(v)
+        when "number" then tostring(v)
+        when "string" then '"' .. escape(v) .. '"'
+        when "table"
+            parts = {}
+            if #v > 0 -- array
+                for item in *v
+                    table.insert(parts, json.encode(item, indent .. "  "))
+            else
+                for k, val in pairs(v)
+                    table.insert(parts, '"' .. escape(k) .. '": ' .. json.encode(val, indent .. "  "))
+            if #parts == 0
+                if #v > 0 then "[]" else "{}"
+            else
+                "{\n" .. indent .. "  " .. table.concat(parts, ",\n" .. indent .. "  ") .. "\n" .. indent .. "}"
+        else
+            tostring(v)
+
+json

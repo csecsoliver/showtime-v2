@@ -8,5 +8,18 @@ The second iteration of a workshop scheduling app made for my mother and her spe
 
 Currently all people signing up will get the teacher role and are able to create and manage workshops. All users can also join workshops and confirmations also work. 
 
-My technologies are lapis with moonscript and all the random lua packages I decided to use.
+My technologies are lapis with yuescript and a grand total of four lua rocks.
+
+## Dev environment
+
+Requires only docker:
+
+```
+cp env.example.yue env.yue   # once
+docker compose up --build
+```
+
+Outgoing mail goes to a bundled [mailpit](https://github.com/axllent/mailpit) container — read it at http://localhost:8025. To use the real SMTP server instead, set `password` and remove `smtp_host`/`smtp_port` in `env.yue`.
+
+The container runs as your host UID/GID (passed via `UID`/`GID` build args), so compiled `.lua` files and the sqlite db in the repo stay owned by you.
 

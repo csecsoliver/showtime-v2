@@ -1,9 +1,21 @@
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    user: "${UID:-1000}:${GID:-1000}"
     ports:
-      - "8080:8080"
+      - "8080:8080" 
     volumes:
-      - .:/app
+      - .:/app:z   # :z relabels the bind mount for SELinux (Fedora/openSUSE); harmless elsewhere
     environment:
       - LAPIS_ENVIRONMENT=development
+    depends_on:
+      - mailpit
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # web UI

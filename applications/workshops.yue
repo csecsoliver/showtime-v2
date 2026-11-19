@@ -37,8 +37,12 @@ class WorkshopApp extends lapis.Application
                 return locales.workshop_full
 
             if @workshop.visibility == 0
-                unless Claimedinvites\find workshop_id: @workshop.id, user_id: @current_user_table.id
+                claimed = Claimedinvites\find workshop_id: @workshop.id, user_id: @current_user_table.id
+                free_invites = Invites\select "where workshop_id = ? and uses_left >= 1", @workshop.id
+                unless claimed and #free_invites > 0
                     return locales.invite_only
+                
+                
             Participations\create {
                 user_id: @current_user_table.id
                 workshop_id: @workshop.id

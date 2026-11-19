@@ -1,6 +1,6 @@
 log = require "libs/log"
-import password from require "env"
-mime = require "mime"
+import password, smtp_host, smtp_port from require "env"
+b64 = (s) -> ngx.encode_base64(s) -- was: mime.b64
 
 -- SMTP client using OpenResty's cosocket API
 smtp_send = (from_addr, to_addr, smtp_host, smtp_port, smtp_user, smtp_pass, subject, body) ->
@@ -11,11 +11,12 @@ smtp_send = (from_addr, to_addr, smtp_host, smtp_port, smtp_user, smtp_pass, sub
     if not ok
         return nil, "connect failed: " .. tostring(err)
     
-    -- Start TLS handshake for port 465 (implicit TLS)
-    session, err = sock\sslhandshake(nil, smtp_host, false)
-    if not session
-        sock\close!
-        return nil, "SSL handshake failed: " .. tostring(err)
+    -- Implicit TLS only on port 465 (SMTPS); plain SMTP (e.g. mailpit on 1025) skips it
+    if smtp_port == 465
+        session, err = sock\sslhandshake(nil, smtp_host, false)
+        if not session
+            sock\close!
+            return nil, "SSL handshake failed: " .. tostring(err)
     
     -- Helper to read SMTP response
     read_response = ->
@@ -53,21 +54,22 @@ smtp_send = (from_addr, to_addr, smtp_host, smtp_port, smtp_user, smtp_pass, sub
         sock\close!
         return nil, "EHLO: " .. tostring(err)
     
-    -- AUTH LOGIN
-    ok, err = send_cmd("AUTH LOGIN", 334)
-    if not ok
-        sock\close!
-        return nil, "AUTH LOGIN: " .. tostring(err)
-    
-    ok, err = send_cmd(mime.b64(smtp_user), 334)
-    if not ok
-        sock\close!
-        return nil, "AUTH user: " .. tostring(err)
-    
-    ok, err = send_cmd(mime.b64(smtp_pass), 235)
-    if not ok
-        sock\close!
-        return nil, "AUTH pass: " .. tostring(err)
+    -- AUTH LOGIN (skipped when no credentials configured, e.g. local mailpit)
+    if smtp_user and smtp_pass
+        ok, err = send_cmd("AUTH LOGIN", 334)
+        if not ok
+            sock\close!
+            return nil, "AUTH LOGIN: " .. tostring(err)
+
+        ok, err = send_cmd(b64(smtp_user), 334)
+        if not ok
+            sock\close!
+            return nil, "AUTH user: " .. tostring(err)
+
+        ok, err = send_cmd(b64(smtp_pass), 235)
+        if not ok
+            sock\close!
+            return nil, "AUTH pass: " .. tostring(err)
     
     ok, err = send_cmd("MAIL FROM:<#{from_addr}>", 250)
     if not ok
@@ -88,7 +90,7 @@ smtp_send = (from_addr, to_addr, smtp_host, smtp_port, smtp_user, smtp_pass, sub
     date = os.date("!%a, %d %b %Y %H:%M:%S +0000")
     
     -- Encode subject for non-ASCII characters (RFC 2047)
-    encoded_subject = "=?UTF-8?B?" .. mime.b64(subject) .. "?="
+    encoded_subject = "=?UTF-8?B?" .. b64(subject) .. "?="
     
     message = table.concat({
         "From: #{from_addr}",
@@ -119,9 +121,9 @@ send_mail = (address, subject, text) ->
         ok, err = smtp_send(
             "showtime@olio.ovh",
             address,
-            "smtp.purelymail.com",
-            465,
-            "showtime@olio.ovh",
+            smtp_host or "smtp.purelymail.com",
+            smtp_port or 465,
+            password and "showtime@olio.ovh" or nil,
             password,
             subject,
             text

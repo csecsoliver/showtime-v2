@@ -14,3 +14,4 @@ nginx.conf.compiled
 *.log
 env*
 .env
+!env.example.yue

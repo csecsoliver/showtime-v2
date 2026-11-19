@@ -70,10 +70,13 @@ class DashWorkshopDetails extends Widget
             input type: "text", id: "emails", name: "emails", placeholder: "email1; email2; email3"
             -- element "select", id: "user", name: "user", ->
             --     users = Users\select!
-            --     for user in *users
+            --     for user in *users 
             --         element "option", value: user.id, user.email 
-            label "for": "uses", locales.invite_uses
-            input type: "number", id: "uses", name: "uses", value: "1", min: "1"
+             
+            if workshop.visibility == 0
+                label "for": "uses", locales.invite_uses
+                input type: "number", id: "uses", name: "uses", value: "1", min: "1"
+                
 
             button type: "submit", locales.create_invite
             

@@ -1,22 +1,35 @@
 FROM openresty/openresty:bookworm-fat
 LABEL maintainer="csecsoliver"
-RUN apt-get update && apt-get install -y luarocks build-essential cmake git unzip uuid-dev libmagickwand-dev libcurl4-openssl-dev libargon2-dev libsqlite3-dev libssl-dev liblua5.1.0-dev pkg-config
 
-RUN luarocks install luasec
-RUN luarocks install yuescript
-RUN luarocks install lapis
-RUN luarocks install moonscript
-RUN luarocks install markdown
-RUN luarocks install lsqlite3
-RUN luarocks install bcrypt
-RUN luarocks install lua-uuid
-RUN luarocks install luafilesystem
-RUN luarocks install magick
-RUN luarocks install lume
-RUN luarocks install argon2
-RUN luarocks install sendmail
-RUN luarocks install Lua-curl CURL_INCDIR=/usr/include/x86_64-linux-gnu
-RUN luarocks install json-lua
+# Match the host user so files written into the bind-mounted source dir
+# (compiled .lua, sqlite db, logs) are owned by you on the host.
+ARG UID=1000
+ARG GID=1000
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    luarocks build-essential pkg-config git \
+    libargon2-dev libsqlite3-dev libssl-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -y && apt-get install cmake -y
+# Only the rocks the app actually imports:
+#   yuescript  - compile .yue sources
+#   lapis      - framework (+ its pure-lua deps, resolved automatically)
+#   lsqlite3   - lapis.db sqlite backend
+#   argon2     - password verify (login)
+#   luaossl    - openssl.rand (CSRF + login tokens)
+RUN luarocks install yuescript \
+ && luarocks install lapis \
+ && luarocks install lsqlite3 \
+ && luarocks install argon2 \
+ && luarocks install luaossl
+
+RUN groupadd -g ${GID} app \
+ && useradd -m -u ${UID} -g ${GID} -s /bin/sh app \
+ && mkdir -p /app \
+ && chown -R app:app /app /usr/local/openresty/nginx
+
+USER app
 WORKDIR /app
 EXPOSE 8080
-CMD sh -c "yue -c . && (yue -w . &) && lapis server"
+CMD sh -c "yue -c . && lapis migrate && (yue -w . &) && lapis server"

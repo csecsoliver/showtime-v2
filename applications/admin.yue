@@ -2,7 +2,7 @@ lapis = require "lapis"
 import respond_to from require "lapis.application"
 db = require "lapis.db"
 log = require "libs/log"
-JSON = require "JSON"
+json = require "libs/json"
 class DashboardApp extends lapis.Application
     @before_filter =>
         unless @current_user and @current_user_table.role >= 99
@@ -13,6 +13,6 @@ class DashboardApp extends lapis.Application
             render: "admin"
         POST: =>
             @output_table = db.query @params.query
-            @output = JSON\encode_pretty(@output_table, nil, { pretty: true, align_keys: false, array_newline: true, indent: "|   " })
+            @output = json.encode(@output_table)
             render: "admin"
     }   
