@@ -1,6 +1,6 @@
 services:
   web:
-    image: "docker pull ghcr.io/csecsoliver/showtime-v2:latest"
+    image: "ghcr.io/csecsoliver/showtime-v2:latest"
     user: "${UID:-1000}:${GID:-1000}"
     ports:
       - "8367:8080"
