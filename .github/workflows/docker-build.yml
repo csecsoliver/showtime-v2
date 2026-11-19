@@ -34,7 +34,7 @@ jobs:
       # The image carries no source (it is bind-mounted at run time), so compile
       # the checkout inside it. Without this a syntax error only shows up in prod.
       - name: Compile all .yue sources
-        run: docker run --rm -v "$PWD":/app -w /app ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest yue -c .
+        run: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/app -w /app ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest yue -c .
 
       - name: Log in to the Container registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
